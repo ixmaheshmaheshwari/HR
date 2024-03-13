@@ -324,7 +324,13 @@ console.log("booked",existingLeaveBooked)
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (_text: string, record: LeaveData) => (
+      render: (_text: string, record: LeaveData) => {
+        if (record.status === "approved" || record.status === "declined") {
+          // If status is either completed or declined, don't render any buttons
+          return null;
+        } else {
+          // Render the buttons for other statuses
+          return (
             <div className="flex flex-col mt-2">
               <input
                 type="submit"
@@ -339,20 +345,28 @@ console.log("booked",existingLeaveBooked)
                 onClick={() => declineLeave(record.leaveId)}
               />
             </div>
-          ),
+          );
+        }
+      },
       className: "px-4 py-2",
     },
   ];
 
   return (
+    <div className="w-full">
     <Table
       columns={columns}
       dataSource={data}
       bordered
       size="middle"
       pagination={{ pageSize: 10 }}
-      className="w-full mt-4"
+      // Combine Tailwind CSS classes into a single className attribute
+      className="w-full mt-4 table-auto ml-3"
+      // Add additional styles using Tailwind CSS utilities
+      style={{ maxWidth: "98%" }}
     />
+  </div>
+ 
   );
 };
 
