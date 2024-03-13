@@ -1,8 +1,18 @@
 import React from 'react'
 
-type Props = {}
 
-const Performancegenerator = (props: Props) => {
+
+const Performancegenerator = () => {
+
+
+
+
+
+
+
+
+
+  
   return (
     <div>Performancegenerator</div>
   )
