@@ -1,0 +1,49 @@
+/* 
+.css-1a428uc-MuiResponsiveChart-container {
+  transform: translate(4px, -23px);
+  transition: translate;
+  width: 250px;
+  height: 200px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* .logo>svg > g > g:first-child {
+  transform: translate(87px, 89px);
+  transition: translate;
+} */
+/* 
+.logo > svg > g > g:nth-child(2){    
+   
+    transform: translate(32px, 79px) !important;
+    transition: translate !important;
+  }
+  .leave>svg > g > g:nth-child(2) {
+    
+    transform: translate(21px, 47px);
+    transition: translate;
+  }
+  .employee>svg > g > g:nth-child(2) {
+    
+    transform: translate(21px, 47px);
+    transition: translate;
+  } 
+ */

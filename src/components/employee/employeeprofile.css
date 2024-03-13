@@ -1,0 +1,28 @@
+/* .title::before {
+    background-color: #4b89dc;
+    content: "";
+    position: absolute;
+    left: 15pc;
+    width: 13px;
+    height: 30px;
+    border-radius: 0 50% 50% 0;
+    margin-left: -1pc;
+} */
+svg[Attributes Style] {
+    stroke: currentcolor;
+    fill: currentcolor;
+    stroke-width: 0;
+    height: 1em;
+    width: 1em;
+}
+::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+/* .lead {
+    width: 42% !important;
+    margin-left: 3pc !important;
+    margin-top: 3pc;
+}
+.tags{
+    margin-left: 3pc !important;
+} */

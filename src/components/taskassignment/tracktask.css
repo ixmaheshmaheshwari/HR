@@ -1,0 +1,8 @@
+.ant-tooltip-arrow{
+    display:none !important;
+}
+.ant-tooltip-inner{
+    background-color:white !important;
+    width:18rem;
+    border-radius:none;
+}

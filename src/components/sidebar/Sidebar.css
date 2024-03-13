@@ -1,0 +1,42 @@
+:where(.css-dev-only-do-not-override-1k979oh).ant-menu-dark.ant-menu-inline .ant-menu-item,
+ :where(.css-dev-only-do-not-override-1k979oh).ant-menu-dark>.ant-menu.ant-menu-inline .ant-menu-item {
+    position: relative;
+    /* padding-left: 24px; */
+    margin-top: 2.9pc;
+}
+.ant-menu-inline-collapsed  .ant-menu-item{
+ 
+    margin-top: 2.4pc;
+}
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-menu-inline-collapsed {
+    width: 130px;
+    height: 100vh !important;
+    padding-top:2pc;
+    padding-bottom:2pc;
+}
+.title {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 34px;
+}
+.ant-layout-sider-collapsed{
+    min-width:79px !important;
+}
+/* .collapsed  {
+    width: 80px; 
+  } */
+  
+/* :where(.css-dev-only-do-not-override-1k979oh).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1k979oh).ant-menu-dark>.ant-menu .ant-menu-item-selected {
+    background-color: transparent; 
+} */
+.sidebar {
+    transition: width 0.3s ease;
+  }
+  .ml-auto {
+    margin-left: auto !important;
+}
+.ant-layout-sider-zero-width-trigger{
+    display:none;
+}
