@@ -93,6 +93,9 @@ const Dashboard = () => {
   const employeesData = storedemployeesData
     ? JSON.parse(storedemployeesData)
     : [];
+    console.log(employeesData)
+    const userEmployee=employeesData.find((employees:Employee)=>employees.employeeId===userId)
+    console.log(userEmployee)
   const newEmoloyees = employeesData.filter((employee: Employee) => {
     const today = moment();
     
@@ -105,7 +108,6 @@ const Dashboard = () => {
   const leaveDetails = storedLeaveData ? JSON.parse(storedLeaveData) : [];
 
   // Get the start of the current month
-  const currentMonth = moment().add(1, "month").month();
   // console.log(currentMonth);
   const leaveApplicationsThisMonth = leaveDetails.filter((leave: LeaveData) => {
     const appliedDate = moment(leave.fromDate, "DD-MM-YYYY"); // Convert applied date to moment object
@@ -311,10 +313,6 @@ const Dashboard = () => {
     SetAdminTaskAssigned(existingTask.length);
   }, []);
 
-  const size = {
-    height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
-    width: isMediumScreen ? 250 : 500,
-  };
   useEffect(() => {
     const storeLeaveAllocated = localStorage.getItem("leaveAllocated");
     const allUserleaveAllocated = storeLeaveAllocated
@@ -325,9 +323,12 @@ const Dashboard = () => {
     );
     const allocatedLeaves = Object.entries(employeeleaveAllocated)
     .filter(([key]) => key !== 'employeeId') // Exclude the employeeId key
-    .reduce((accumulator, [, value]) => accumulator + value, 0);
-    setLeavesAllocatedTouser(allocatedLeaves);
-
+    .reduce((accumulator: number, [, value]: [string, unknown]) => {
+      // Convert the unknown value to a number before adding to the accumulator
+      const numericValue = typeof value === 'number' ? value : 0;
+      return accumulator + numericValue;
+    }, 0);
+  setLeavesAllocatedTouser(allocatedLeaves);
     console.log(allocatedLeaves)
   },[]);
   useEffect(() => {
@@ -340,7 +341,11 @@ const Dashboard = () => {
     );
     const allocatedLeaves = Object.entries(employeeleaveRemaining)
     .filter(([key]) => key !== 'employeeId') // Exclude the employeeId key
-    .reduce((accumulator, [, value]) => accumulator + value, 0);
+    .reduce((accumulator: number, [, value]: [string, unknown]) => {
+      // Convert the unknown value to a number before adding to the accumulator
+      const numericValue = typeof value === 'number' ? value : 0;
+      return accumulator + numericValue;
+    }, 0);
     setLeavesAvailabelToUser(allocatedLeaves);
 
     console.log("rem",allocatedLeaves)
@@ -356,7 +361,11 @@ const Dashboard = () => {
     );
     const bookedLeaves = Object.entries(employeeleaveBooked)
     .filter(([key]) => key !== 'employeeId') // Exclude the employeeId key
-    .reduce((accumulator, [, value]) => accumulator + value, 0);
+    .reduce((accumulator: number, [, value]: [string, unknown]) => {
+      // Convert the unknown value to a number before adding to the accumulator
+      const numericValue = typeof value === 'number' ? value : 0;
+      return accumulator + numericValue;
+    }, 0);
     setLeavesRemainingToUse(bookedLeaves);
 
     console.log(bookedLeaves)
@@ -370,7 +379,14 @@ const Dashboard = () => {
         <main className="flex-grow p-4">
           {(userRole === "admin" || userRole === "manager") && (
             <>
+             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 mb-10">
+  <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
+    Welcome {userEmployee.firstName}  {userEmployee.lastName} !
+  </h2>
+</div>
+             
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
+             
                 <div className="bg-white p-4 shadow-md rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">
                     Total Employees
@@ -565,6 +581,11 @@ const Dashboard = () => {
 
           {userRole === "employee" && (
             <>
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 mb-10">
+  <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
+    Welcome {userEmployee.firstName}  {userEmployee.lastName} !
+  </h2>
+</div>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
                 <div className="bg-white p-4 shadow-md rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">
@@ -747,7 +768,7 @@ const Dashboard = () => {
                     ]}
                     {...taskSetting}
                   />
-                  <p>Graph for Staff Turnover</p>
+                 
                 </div>
               </div>
             </>

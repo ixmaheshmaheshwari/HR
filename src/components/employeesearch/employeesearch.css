@@ -1,15 +1,4 @@
  .ant-select-suffix{
     display:none;
 }
-.search {
-    transition: transform 0.3s ease-in-out;
-  }
 
-  .ant-select-focused {
-    scale:2;
-    backdrop-filter: blur(8px);
-  }
-
-  .ant-select-focused .ant-select-item-option{
-    scale:1.3
-  }
