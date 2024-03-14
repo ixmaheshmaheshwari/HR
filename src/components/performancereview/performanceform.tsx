@@ -177,14 +177,12 @@ const PerformanceForm = () => {
       ? JSON.parse(storedEmployeeData)
       : [];
 
-    if (role === "manager") {
+   
       const employeesData = employeeData.filter(
         (employee: Employee) => employee.employeeRole !== "admin"
-      );
+      )
       setEmployeesData(employeesData);
-    } else {
-      setEmployeesData(employeeData);
-    }
+    
   }, []);
 
   const { fields, append, remove } = useFieldArray({

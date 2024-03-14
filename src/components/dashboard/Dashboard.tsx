@@ -16,7 +16,7 @@ interface Leavellocated {
   employeeId: number;
   casualLeave: number;
   earnedLeave: number;
-  
+
   leaveWithoutPay: number;
   marriageLeave: number;
   optionalHoliday: number;
@@ -93,16 +93,17 @@ const Dashboard = () => {
   const employeesData = storedemployeesData
     ? JSON.parse(storedemployeesData)
     : [];
-    console.log(employeesData)
-    const userEmployee=employeesData.find((employees:Employee)=>employees.employeeId===userId)
-    console.log(userEmployee)
+  console.log(employeesData);
+  const userEmployee = employeesData.find(
+    (employees: Employee) => employees.employeeId === userId
+  );
+  console.log(userEmployee);
   const newEmoloyees = employeesData.filter((employee: Employee) => {
     const today = moment();
-    
+
     const joinDate = employee.dateOfJoining;
     return today.diff(joinDate, "hours") <= 24;
   });
- 
 
   const storedLeaveData = localStorage.getItem("leaveDetails");
   const leaveDetails = storedLeaveData ? JSON.parse(storedLeaveData) : [];
@@ -124,7 +125,7 @@ const Dashboard = () => {
   });
   const numberOfLeaveApplicationsThisMonth = leaveApplicationsThisMonth.length;
   const numberOfLeaveApplicationsToday = leaveApplicationsToday.length;
-  
+
   const totalLeaves = leaveDetails.length;
   const approvedLeaves = leaveDetails.filter(
     (leave: LeaveData) => leave.status === "approved"
@@ -132,18 +133,17 @@ const Dashboard = () => {
   const declinedLeaves = leaveDetails.filter(
     (leave: LeaveData) => leave.status === "declined"
   ).length;
- 
 
   const userLeaveData = leaveDetails.filter(
-    (leave:LeaveData) => leave.employeeId === userId
+    (leave: LeaveData) => leave.employeeId === userId
   );
 
   const usertotalLeaves = userLeaveData.length;
   const userapprovedLeaves = userLeaveData.filter(
-    (leave:LeaveData) => leave.status === "approved"
+    (leave: LeaveData) => leave.status === "approved"
   ).length;
   const userdeclinedLeaves = userLeaveData.filter(
-    (leave:LeaveData) => leave.status === "declined"
+    (leave: LeaveData) => leave.status === "declined"
   ).length;
 
   const userpieSeries = [
@@ -306,7 +306,7 @@ const Dashboard = () => {
     });
     SetTaskAssigned(userTask.length);
   }, []);
-  
+
   useEffect(() => {
     const storedTask = localStorage.getItem("taskData");
     const existingTask = storedTask ? JSON.parse(storedTask) : [];
@@ -319,37 +319,37 @@ const Dashboard = () => {
       ? JSON.parse(storeLeaveAllocated)
       : [];
     const employeeleaveAllocated = allUserleaveAllocated.find(
-      (leaveAllocated:Leavellocated) => leaveAllocated.employeeId === userId
+      (leaveAllocated: Leavellocated) => leaveAllocated.employeeId === userId
     );
     const allocatedLeaves = Object.entries(employeeleaveAllocated)
-    .filter(([key]) => key !== 'employeeId') // Exclude the employeeId key
-    .reduce((accumulator: number, [, value]: [string, unknown]) => {
-      // Convert the unknown value to a number before adding to the accumulator
-      const numericValue = typeof value === 'number' ? value : 0;
-      return accumulator + numericValue;
-    }, 0);
-  setLeavesAllocatedTouser(allocatedLeaves);
-    console.log(allocatedLeaves)
-  },[]);
+      .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
+      .reduce((accumulator: number, [, value]: [string, unknown]) => {
+        // Convert the unknown value to a number before adding to the accumulator
+        const numericValue = typeof value === "number" ? value : 0;
+        return accumulator + numericValue;
+      }, 0);
+    setLeavesAllocatedTouser(allocatedLeaves);
+    console.log(allocatedLeaves);
+  }, []);
   useEffect(() => {
     const storeLeaveRemianing = localStorage.getItem("leaveAvailable");
     const allUserleaveRemanining = storeLeaveRemianing
       ? JSON.parse(storeLeaveRemianing)
       : [];
     const employeeleaveRemaining = allUserleaveRemanining.find(
-      (leaveAllocated:Leavellocated) => leaveAllocated.employeeId === userId
+      (leaveAllocated: Leavellocated) => leaveAllocated.employeeId === userId
     );
     const allocatedLeaves = Object.entries(employeeleaveRemaining)
-    .filter(([key]) => key !== 'employeeId') // Exclude the employeeId key
-    .reduce((accumulator: number, [, value]: [string, unknown]) => {
-      // Convert the unknown value to a number before adding to the accumulator
-      const numericValue = typeof value === 'number' ? value : 0;
-      return accumulator + numericValue;
-    }, 0);
+      .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
+      .reduce((accumulator: number, [, value]: [string, unknown]) => {
+        // Convert the unknown value to a number before adding to the accumulator
+        const numericValue = typeof value === "number" ? value : 0;
+        return accumulator + numericValue;
+      }, 0);
     setLeavesAvailabelToUser(allocatedLeaves);
 
-    console.log("rem",allocatedLeaves)
-  },[]);
+    console.log("rem", allocatedLeaves);
+  }, []);
 
   useEffect(() => {
     const storeLeaveBooked = localStorage.getItem("leaveBooked");
@@ -357,18 +357,18 @@ const Dashboard = () => {
       ? JSON.parse(storeLeaveBooked)
       : [];
     const employeeleaveBooked = allUserleaveBooked.find(
-      (leaveBooked:Leavellocated) => leaveBooked.employeeId === userId
+      (leaveBooked: Leavellocated) => leaveBooked.employeeId === userId
     );
     const bookedLeaves = Object.entries(employeeleaveBooked)
-    .filter(([key]) => key !== 'employeeId') // Exclude the employeeId key
-    .reduce((accumulator: number, [, value]: [string, unknown]) => {
-      // Convert the unknown value to a number before adding to the accumulator
-      const numericValue = typeof value === 'number' ? value : 0;
-      return accumulator + numericValue;
-    }, 0);
+      .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
+      .reduce((accumulator: number, [, value]: [string, unknown]) => {
+        // Convert the unknown value to a number before adding to the accumulator
+        const numericValue = typeof value === "number" ? value : 0;
+        return accumulator + numericValue;
+      }, 0);
     setLeavesRemainingToUse(bookedLeaves);
 
-    console.log(bookedLeaves)
+    console.log(bookedLeaves);
   });
 
   return (
@@ -379,14 +379,13 @@ const Dashboard = () => {
         <main className="flex-grow p-4">
           {(userRole === "admin" || userRole === "manager") && (
             <>
-             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 mb-10">
-  <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
-    Welcome {userEmployee.firstName}  {userEmployee.lastName} !
-  </h2>
-</div>
-             
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 mb-10">
+                <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
+                  Welcome {userEmployee.firstName} {userEmployee.lastName} !
+                </h2>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
-             
                 <div className="bg-white p-4 shadow-md rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">
                     Total Employees
@@ -581,11 +580,11 @@ const Dashboard = () => {
 
           {userRole === "employee" && (
             <>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 mb-10">
-  <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
-    Welcome {userEmployee.firstName}  {userEmployee.lastName} !
-  </h2>
-</div>
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 mb-10">
+                <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left">
+                  Welcome {userEmployee.firstName} {userEmployee.lastName} !
+                </h2>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
                 <div className="bg-white p-4 shadow-md rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">
@@ -595,7 +594,9 @@ const Dashboard = () => {
                 </div>
 
                 <div className="bg-white p-4 shadow-md rounded-lg">
-                  <h3 className="text-lg font-semibold mb-2">Leaves Remaining</h3>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Leaves Remaining
+                  </h3>
                   <p className="text-3xl font-bold">5</p>
                 </div>
 
@@ -619,7 +620,9 @@ const Dashboard = () => {
                         {" "}
                         Leaves Allocated{" "}
                       </h3>
-                      <p className="text-3xl font-bold">{leavesAllocatedToUser}</p>
+                      <p className="text-3xl font-bold">
+                        {leavesAllocatedToUser}
+                      </p>
                     </div>
                   </div>
 
@@ -630,7 +633,9 @@ const Dashboard = () => {
                       <h3 className="text-lg font-semibold mb-2">
                         Leave Applied
                       </h3>
-                      <p className="text-3xl font-bold">{leavesRemainingToUser}</p>
+                      <p className="text-3xl font-bold">
+                        {leavesRemainingToUser}
+                      </p>
                     </div>
 
                     {/* This Month's Leaves */}
@@ -638,7 +643,9 @@ const Dashboard = () => {
                       <h3 className="text-lg font-semibold mb-2">
                         Leaves Remaining
                       </h3>
-                      <p className="text-3xl font-bold">{leavesAvailabelToUser}</p>
+                      <p className="text-3xl font-bold">
+                        {leavesAvailabelToUser}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -650,13 +657,11 @@ const Dashboard = () => {
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 logo">
                     <PieChart
-                    style={{
-                      width: 200,
-                      height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
-                    }}
-                   series={userpieSeries}
-
-                    
+                      style={{
+                        width: 200,
+                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                      }}
+                      series={userpieSeries}
                     />
                   </div>
                 </div>
@@ -673,7 +678,6 @@ const Dashboard = () => {
                         height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
                       }}
                       series={userdeclineSeries}
-
                     />
                   </div>{" "}
                 </div>
@@ -768,7 +772,6 @@ const Dashboard = () => {
                     ]}
                     {...taskSetting}
                   />
-                 
                 </div>
               </div>
             </>
