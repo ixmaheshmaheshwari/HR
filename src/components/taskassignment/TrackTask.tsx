@@ -244,7 +244,7 @@ localStorage.setItem("taskData",JSON.stringify(updatedTask));
             adminTaskData[index] = task;
             console.log(adminTaskData);
             localStorage.setItem("taskData", JSON.stringify(adminTaskData));
-            toast.success("Task re-opened successfully");
+            toast.success("Task completed successfully");
           } else {
             console.error("Task not found");
             toast.error("Task not found");
