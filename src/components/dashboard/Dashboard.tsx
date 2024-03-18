@@ -9,6 +9,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { useSelector } from "react-redux";
 import { LoginState } from "../../redux/store/rootreducer";
 import moment from "moment";
+import ReactApexChart from "react-apexcharts";
 // import { number } from "yup";
 
 const theme = createTheme(); // Create your custom theme
@@ -147,50 +148,17 @@ const Dashboard = () => {
   ).length;
 
   const userpieSeries = [
-    {
-      data: [
+   
+     
         { label: "Leave Applied", value: usertotalLeaves },
         { label: "Leave Approved", value: userapprovedLeaves },
-      ],
-      highlightScope: {
-        faded: "global",
-        highlighted: "item",
-      },
-      faded: {
-        innerRadius: 30,
-        additionalRadius: -30,
-        color: "gray",
-      },
-      innerRadius: 30,
-      outerRadius: 70,
-      paddingAngle: 5,
-      cornerRadius: 5,
-      startAngle: -90,
-      endAngle: 180,
-    },
+   
   ];
   const userdeclineSeries = [
-    {
-      data: [
+   
         { label: "Leave Applied", value: usertotalLeaves },
         { label: "Leave Declined", value: userdeclinedLeaves },
-      ],
-      highlightScope: {
-        faded: "global",
-        highlighted: "item",
-      },
-      faded: {
-        innerRadius: 30,
-        additionalRadius: -30,
-        color: "gray",
-      },
-      innerRadius: 30,
-      outerRadius: 70,
-      paddingAngle: 5,
-      cornerRadius: 5,
-      startAngle: -90,
-      endAngle: 180,
-    },
+   
   ];
   // console.log(totalLeaves, approvedLeaves);
   const chartSetting = {
@@ -222,50 +190,13 @@ const Dashboard = () => {
     // },
   };
   const pieSeries = [
-    {
-      data: [
-        { label: "Leave Applied", value: totalLeaves },
-        { label: "Leave Approved", value: approvedLeaves },
-      ],
-      highlightScope: {
-        faded: "global",
-        highlighted: "item",
-      },
-      faded: {
-        innerRadius: 30,
-        additionalRadius: -30,
-        color: "gray",
-      },
-      innerRadius: 30,
-      outerRadius: 70,
-      paddingAngle: 5,
-      cornerRadius: 5,
-      startAngle: -90,
-      endAngle: 180,
-    },
+    { label: "Leave Applied", value: totalLeaves },
+    { label: "Leave Approved", value: approvedLeaves },
   ];
+
   const declineSeries = [
-    {
-      data: [
-        { label: "Leave Applied", value: totalLeaves },
-        { label: "Leave Declined", value: declinedLeaves },
-      ],
-      highlightScope: {
-        faded: "global",
-        highlighted: "item",
-      },
-      faded: {
-        innerRadius: 30,
-        additionalRadius: -30,
-        color: "gray",
-      },
-      innerRadius: 30,
-      outerRadius: 70,
-      paddingAngle: 5,
-      cornerRadius: 5,
-      startAngle: -90,
-      endAngle: 180,
-    },
+    { label: "Leave Applied", value: totalLeaves },
+    { label: "Leave Declined", value: declinedLeaves },
   ];
   const staffTurnoverData = [
     { month: "Jan", turnover: 5 },
@@ -455,12 +386,93 @@ const Dashboard = () => {
                     Leave Approval Till Today
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96">
-                    <PieChart
-                      style={{
-                        width: 200,
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                    <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: true,
+
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: pieSeries.map((item) => item.label),
                       }}
-                      series={pieSeries}
+                      series={pieSeries.map((item) => item.value)}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
                   </div>
                 </div>
@@ -471,12 +483,93 @@ const Dashboard = () => {
                     Leave Declined Till Today
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96">
-                    <PieChart
-                      style={{
-                        width: 200,
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                    <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: false,
+
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: declineSeries.map((item) => item.label),
                       }}
-                      series={declineSeries}
+                      series={declineSeries.map((item) => item.value)}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
                   </div>{" "}
                 </div>
@@ -487,36 +580,97 @@ const Dashboard = () => {
                     Employees Location
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96">
-                    <PieChart
-                      style={{
-                        width: 200,
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                    <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: true,
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: ["Bhilwara", "Hyderabad", "Abu Dhabi", "Dubai"],
                       }}
                       series={[
-                        {
-                          data: [
-                            { label: "Bhilwara", value: 10 },
-                            { label: "Hyderabad", value: 35 },
-                            { label: "Abu Dhabi", value: 5 },
-                            { label: "Dubai", value: 3 },
-                          ],
-                          highlightScope: {
-                            faded: "global",
-                            highlighted: "item",
-                          },
-                          faded: {
-                            innerRadius: 30,
-                            additionalRadius: -30,
-                            color: "gray",
-                          },
-                          innerRadius: 30,
-                          outerRadius: 70,
-                          paddingAngle: 5,
-                          cornerRadius: 5,
-                          startAngle: -90,
-                          endAngle: 180,
-                        },
+                        10, // Value for Bhilwara
+                        35, // Value for Hyderabad
+                        5, // Value for Abu Dhabi
+                        3, // Value for Dubai
                       ]}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
                   </div>{" "}
                 </div>
@@ -526,33 +680,96 @@ const Dashboard = () => {
                     Remote vs Onsite
                   </h3>
                   <div className="w-full h-64 md:h-80 lg:h-96">
-                    <PieChart
-                      style={{
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                    <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: true,
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: ["Remote", "OnSite", "Office"],
                       }}
                       series={[
-                        {
-                          data: [
-                            { label: "Remote", value: 20 },
-                            { label: "OnSite", value: 7 },
-                          ],
-                          highlightScope: {
-                            faded: "global",
-                            highlighted: "item",
-                          },
-                          faded: {
-                            innerRadius: 30,
-                            additionalRadius: -30,
-                            color: "gray",
-                          },
-                          innerRadius: 30,
-                          outerRadius: 90,
-                          paddingAngle: 5,
-                          cornerRadius: 5,
-                          startAngle: -90,
-                          endAngle: 180,
-                        },
+                        7, //remote
+                        7, // onsite
+                        20,
                       ]}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
                   </div>
                 </div>
@@ -560,18 +777,199 @@ const Dashboard = () => {
                 {/* Placeholder for Graph: Staff Turnover */}
                 <div className="bg-white p-4 shadow-md rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">Staff Turnover</h3>
-                  <BarChart
-                    dataset={staffTurnoverData}
-                    xAxis={[{ scaleType: "band", dataKey: "month" }]}
+                  <ReactApexChart
+                    options={{
+                      chart: {
+                        type: "bar",
+                        toolbar: {
+                          show: false, // Disable toolbar
+                        },
+                      },
+                      xaxis: {
+                        categories: staffTurnoverData.map((data) => data.month), // Define x-axis categories
+                        labels: {
+                          rotate: 45,
+
+                          style: {
+                            fontSize: "12px", // Adjust x-axis label font size
+                          },
+                        },
+                      },
+                      yaxis: {
+                        title: {
+                          text: "Staff Turnover", // Set y-axis title
+                        },
+                        labels: {
+                          style: {
+                            fontSize: "12px", // Adjust y-axis label font size
+                          },
+                        },
+                      },
+                      tooltip: {
+                        enabled: true, // Enable tooltip
+                        enabledOnSeries: undefined,
+                        shared: true,
+                        followCursor: false,
+                        intersect: false,
+                        fillSeriesColor: false,
+                        theme: "light", // Set tooltip theme
+                        style: {
+                          fontSize: "12px", // Adjust tooltip font size
+                        },
+                      },
+                      dataLabels: {
+                        enabled: true, // Enable data labels
+                        style: {
+                          fontSize: "12px", // Adjust data labels font size
+                        },
+                      },
+                      responsive: [
+                        {
+                          breakpoint: 480,
+                          options: {
+                            chart: {
+                              width: 300,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                              enabled: false,
+                              textAnchor: "start",
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 391,
+                          options: {
+                            chart: {
+                              width: 270,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 376,
+                          options: {
+                            chart: {
+                              width: 222,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                            
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 1238,
+                          options: {
+                            chart: {
+                              width: 450,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                            
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 1055,
+                          options: {
+                            chart: {
+                              width: 350,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                            
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 285,
+                          options: {
+                            chart: {
+                              width: 157,
+                            },
+                            legend: {
+                              position: "bottom",
+                              fontSize: "10px",
+                              width: 100,
+                            },
+                            labels: false,
+                            dataLabels: {
+                              enabled: false,
+                            },
+                            // xaxis:null
+                          },
+                        },
+                        {
+                          breakpoint: 900,
+                          options: {
+                            chart: {
+                              width: 230,
+                            },
+                            legend: {
+                              position: "bottom",
+                              fontSize: "15px",
+                              width: 150,
+                            },
+                            xaxis: {
+                              labels: {
+                                show: false, // Hides the x-axis labels
+                              },
+                            },
+                            dataLabels: {
+                              enabled: true,
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 1030,
+                          options: {
+                            chart: {
+                              width: 300,
+                            },
+                            legend: {
+                              position: "bottom",
+                              fontSize: "15px",
+                              width: 150,
+                            },
+                            dataLabels: {
+                              enabled: true,
+                            },
+                          },
+                        },
+                      ],
+                      plotOptions: {
+                        bar: {
+                          horizontal: false, // Set bars to vertical orientation
+                          columnWidth: "50%", // Adjust bar width
+                         
+                        },
+                      },
+                      grid: {
+                        show: true, // Show grid lines
+                      },
+                    }}
                     series={[
                       {
-                        dataKey: "turnover",
-                        label: "Turnover Rate",
-                        valueFormatter,
+                        name: "Turnover Rate", // Set series name
+                        data: staffTurnoverData.map((data) => data.turnover), // Set series data
                       },
                     ]}
-                    {...chartSetting}
+                    type="bar"
+                    width={isSmallScreen ? 300 : 500}
+                    height={400}
                   />
+
                   <p>Graph for Staff Turnover</p>
                 </div>
               </div>
@@ -656,13 +1054,100 @@ const Dashboard = () => {
                     Leave Approval Till Today
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 logo">
-                    <PieChart
-                      style={{
-                        width: 200,
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                  
+                  <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                                textAnchor: "start",
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: false,
+
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: userpieSeries.map((item) => item.label),
                       }}
-                      series={userpieSeries}
+                      series={userpieSeries.map((item) => item.value)}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
+                    
                   </div>
                 </div>
 
@@ -672,13 +1157,99 @@ const Dashboard = () => {
                     Leave Declined Till Today
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 leave">
-                    <PieChart
-                      style={{
-                        width: 200,
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                  <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                                textAnchor: "start",
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: false,
+
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: userdeclineSeries.map((item) => item.label),
                       }}
-                      series={userdeclineSeries}
+                      series={userdeclineSeries.map((item) => item.value)}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
+                   
                   </div>{" "}
                 </div>
 
@@ -688,36 +1259,101 @@ const Dashboard = () => {
                     Employees Location
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 employee">
-                    <PieChart
-                      style={{
-                        width: 200,
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                  <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                                textAnchor: "start",
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: false,
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: ["Bhilwara", "Hyderabad", "Abu Dhabi", "Dubai"],
                       }}
                       series={[
-                        {
-                          data: [
-                            { label: "Bhilwara", value: 10 },
-                            { label: "Hyderabad", value: 35 },
-                            { label: "Abu Dhabi", value: 5 },
-                            { label: "Dubai", value: 3 },
-                          ],
-                          highlightScope: {
-                            faded: "global",
-                            highlighted: "item",
-                          },
-                          faded: {
-                            innerRadius: 30,
-                            additionalRadius: -30,
-                            color: "gray",
-                          },
-                          innerRadius: 30,
-                          outerRadius: 70,
-                          paddingAngle: 5,
-                          cornerRadius: 5,
-                          startAngle: -90,
-                          endAngle: 180,
-                        },
+                        10, // Value for Bhilwara
+                        35, // Value for Hyderabad
+                        5, // Value for Abu Dhabi
+                        3, // Value for Dubai
                       ]}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
                   </div>{" "}
                 </div>
@@ -727,33 +1363,100 @@ const Dashboard = () => {
                     Remote vs Onsite
                   </h3>
                   <div className="w-full h-64 md:h-80 lg:h-96">
-                    <PieChart
-                      style={{
-                        height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+                  <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "pie",
+                        },
+                        responsive: [
+                          {
+                            breakpoint: 480,
+                            options: {
+                              chart: {
+                                width: 200,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: false,
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 376,
+                            options: {
+                              chart: {
+                                width: 160,
+                              },
+                              legend: {
+                                position: "bottom",
+                              },
+                              dataLabels: {
+                                enabled: false,
+                                textAnchor: "start",
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 285,
+                            options: {
+                              chart: {
+                                width: 104,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "10px",
+                                width: 100,
+                              },
+                              dataLabels: {
+                                enabled: false,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 900,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                          {
+                            breakpoint: 1030,
+                            options: {
+                              chart: {
+                                width: 230,
+                              },
+                              legend: {
+                                position: "bottom",
+                                fontSize: "15px",
+                                width: 150,
+                              },
+                              dataLabels: {
+                                enabled: true,
+                              },
+                            },
+                          },
+                        ],
+                        labels: ["Remote", "OnSite", "Office"],
                       }}
                       series={[
-                        {
-                          data: [
-                            { label: "Remote", value: 20 },
-                            { label: "OnSite", value: 7 },
-                          ],
-                          highlightScope: {
-                            faded: "global",
-                            highlighted: "item",
-                          },
-                          faded: {
-                            innerRadius: 30,
-                            additionalRadius: -30,
-                            color: "gray",
-                          },
-                          innerRadius: 30,
-                          outerRadius: 90,
-                          paddingAngle: 5,
-                          cornerRadius: 5,
-                          startAngle: -90,
-                          endAngle: 180,
-                        },
+                        7, //remote
+                        7, // onsite
+                        20,
                       ]}
+                      type="pie"
+                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
                   </div>
                 </div>
@@ -761,17 +1464,195 @@ const Dashboard = () => {
                 {/* Placeholder for Graph: Staff Turnover */}
                 <div className="bg-white p-4 shadow-md rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">Task Completed</h3>
-                  <BarChart
-                    dataset={userTaskCompleted}
-                    xAxis={[{ scaleType: "band", dataKey: "month" }]}
+                  <ReactApexChart
+                    options={{
+                      chart: {
+                        type: "bar",
+                        toolbar: {
+                          show: false, // Disable toolbar
+                        },
+                      },
+                      xaxis: {
+                        categories: userTaskCompleted.map((data) => data.month), // Define x-axis categories
+                        labels: {
+                          
+
+                          style: {
+                            fontSize: "12px", // Adjust x-axis label font size
+                          },
+                        },
+                      },
+                      yaxis: {
+                        title: {
+                          text: "Task Completed ", // Set y-axis title
+                        },
+                        labels: {
+                          style: {
+                            fontSize: "12px", // Adjust y-axis label font size
+                          },
+                        },
+                      },
+                      tooltip: {
+                        enabled: true, // Enable tooltip
+                        enabledOnSeries: undefined,
+                        shared: true,
+                        followCursor: false,
+                        intersect: false,
+                        fillSeriesColor: false,
+                        theme: "light", // Set tooltip theme
+                        style: {
+                          fontSize: "12px", // Adjust tooltip font size
+                        },
+                      },
+                      dataLabels: {
+                        enabled: true, // Enable data labels
+                        style: {
+                          fontSize: "12px", // Adjust data labels font size
+                        },
+                      },
+                      responsive: [
+                        {
+                          breakpoint: 480,
+                          options: {
+                            chart: {
+                              width: 300,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 391,
+                          options: {
+                            chart: {
+                              width: 270,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 376,
+                          options: {
+                            chart: {
+                              width: 222,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                            
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 1238,
+                          options: {
+                            chart: {
+                              width: 450,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                            
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 1055,
+                          options: {
+                            chart: {
+                              width: 350,
+                            },
+                            legend: {
+                              position: "bottom",
+                            },
+                            dataLabels: {
+                            
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 285,
+                          options: {
+                            chart: {
+                              width: 157,
+                            },
+                            legend: {
+                              position: "bottom",
+                              fontSize: "10px",
+                              width: 100,
+                            },
+                            labels: false,
+                            dataLabels: {
+                              enabled: false,
+                            },
+                            // xaxis:null
+                          },
+                        },
+                        {
+                          breakpoint: 900,
+                          options: {
+                            chart: {
+                              width: 230,
+                            },
+                            legend: {
+                              position: "bottom",
+                              fontSize: "15px",
+                              width: 150,
+                            },
+                            xaxis: {
+                              labels: {
+                                show: false, // Hides the x-axis labels
+                              },
+                            },
+                            dataLabels: {
+                              enabled: true,
+                            },
+                          },
+                        },
+                        {
+                          breakpoint: 1030,
+                          options: {
+                            chart: {
+                              width: 300,
+                            },
+                            legend: {
+                              position: "bottom",
+                              fontSize: "15px",
+                              width: 150,
+                            },
+                            dataLabels: {
+                              enabled: true,
+                            },
+                          },
+                        },
+                      ],
+                      plotOptions: {
+                        bar: {
+                          horizontal: false, // Set bars to vertical orientation
+                          columnWidth: "50%", // Adjust bar width
+                         
+                        },
+                      },
+                      grid: {
+                        show: true, // Show grid lines
+                      },
+                    }}
                     series={[
                       {
-                        dataKey: "task",
-                        label: "Task Completed",
+                        name: "Task Complete", // Set series name
+                        data: userTaskCompleted.map((data) => data.task), // Set series data
                       },
                     ]}
-                    {...taskSetting}
+                    type="bar"
+                    width={isSmallScreen ? 300 : 500}
+                    height={400}
                   />
+                 
                 </div>
               </div>
             </>

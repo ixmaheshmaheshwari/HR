@@ -59,12 +59,13 @@ export default function Example() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src={Innovatech}
+                  
+                  className="h-6 w-4/12 ml-10 md:w-auto  xl:h-8"
+                  src={Innovatech}
                     alt="Your Company"
                   />
                 </div>
-                <div className="w-11/12 sm:ml-6  flex justify-center">
+                <div className="w-11/12 sm:ml-6 ml-[-60px] sm:flex justify-center">
                  <EmployeeSearch/>
                 </div>
               </div>
