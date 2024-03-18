@@ -15,7 +15,7 @@ import {
 const { Option } = Select;
 const theme = createTheme(); // Create your custom theme
 interface FormData {
- 
+ employee:number;
   tasks: FormTasks[]
 }
 interface FormTasks{
@@ -364,7 +364,7 @@ const renderPieCharts = () => {
       <div key={index} className="bg-white p-4 shadow-md rounded-lg mb-4">
         <h3 className="text-lg font-semibold mb-2">Performance Metrics for Task {selectedTask}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
-          <div>
+          <div className="col-span-1 h-fit">
             <h4 className="text-lg font-semibold mb-2">Quality of Code</h4>
             <ReactApexChart
               options={{
@@ -372,13 +372,94 @@ const renderPieCharts = () => {
                   type: "pie",
                 },
                 labels: ["Total Points", "Quality of Code"],
+                responsive: [
+                  {
+                    breakpoint: 480,
+                    options: {
+                      chart: {
+                        width: 200
+                      },
+                      legend: {
+                        position: 'bottom'
+                      }
+                    }
+                  },
+                  {
+                    breakpoint: 376,
+                    options: {
+                      chart: {
+                        width: 160
+                      },
+                      legend: {
+                        position: 'bottom'
+                      },
+                      dataLabels: {
+                        enabled: true,
+                       
+                        textAnchor: 'start',
+                      },
+                    }
+                  },
+                  {
+                    breakpoint: 285,
+                    options: {
+                      chart: {
+                        width: 104
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '10px',
+                        width:100
+                      },
+                      dataLabels: {
+                        enabled: false,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 900,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 1030,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                 
+                ]
               }}
               series={[10, ...data.tasks.map((task:FormTasks) => task.qualityOfCode)]}
               type="pie"
-              height={isSmallScreen ? 300 : 400}
-            />
+              height="261px"    
+              minHeight="110px"        />
           </div>
-          <div>
+          <div className="col-span-1 h-fit">
             <h4 className="text-lg font-semibold mb-2">Quantity of Code</h4>
             <ReactApexChart
               options={{
@@ -386,39 +467,294 @@ const renderPieCharts = () => {
                   type: "pie",
                 },
                 labels: ["Total Points", "Quantity of Code"],
+                responsive: [
+                  {
+                    breakpoint: 480,
+                    options: {
+                      chart: {
+                        width: 200
+                      },
+                      legend: {
+                        position: 'bottom'
+                      }
+                    }
+                  },
+                  {
+                    breakpoint: 376,
+                    options: {
+                      chart: {
+                        width: 160
+                      },
+                      legend: {
+                        position: 'bottom'
+                      },
+                      dataLabels: {
+                        enabled: true,
+                       
+                        textAnchor: 'start',
+                      },
+                    }
+                  },
+                  {
+                    breakpoint: 285,
+                    options: {
+                      chart: {
+                        width: 104
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '10px',
+                        width:100
+                      },
+                      dataLabels: {
+                        enabled: false,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 900,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 1030,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                 
+                ]
               }}
               series={[10, ...data.tasks.map((task:FormTasks) => task.quantityOfCode)]}
               type="pie"
-              height={isSmallScreen ? 300 : 400}
-            />
+              height="261px" 
+              minHeight="110px "           />
           </div>
-          <div>
+          <div className="col-span-1">
             <h4 className="text-lg font-semibold mb-2">Contribution to Company</h4>
             <ReactApexChart
               options={{
                 chart: {
                   type: "pie",
                 },
-                labels: ["Total Points", "Contribution to Company"],
+               
+                labels: ["Total Points", "Contribution"],
+                responsive: [
+                  {
+                    breakpoint: 480,
+                    options: {
+                      chart: {
+                        width: 200
+                      },
+                      legend: {
+                        position: 'bottom'
+                      }
+                    }
+                  },
+                  {
+                    breakpoint: 376,
+                    options: {
+                      chart: {
+                        width: 160
+                      },
+                      legend: {
+                        position: 'bottom'
+                      },
+                      dataLabels: {
+                        enabled: true,
+                       
+                        textAnchor: 'start',
+                      },
+                    }
+                  },
+                  {
+                    breakpoint: 285,
+                    options: {
+                      chart: {
+                        width: 104
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '10px',
+                        width:100
+                      },
+                      dataLabels: {
+                        enabled: false,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 900,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 1030,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                 
+                ]
               }}
               series={[10, ...data.tasks.map((task:FormTasks) => task.contributionToCompany)]}
               type="pie"
-              height={isSmallScreen ? 300 : 400}
-            />
+              height="261px"   
+              minHeight="110px"         />
           </div>
-          <div>
+          
+          
+          <div className="col-span-1">
             <h4 className="text-lg font-semibold mb-2">Performance</h4>
             <ReactApexChart
               options={{
+                dataLabels: {
+                  enabled: true,
+                  textAnchor: 'middle',
+                  offsetX: 10,
+  offsetY: 10,
+                  },
+            
                 chart: {
                   type: "pie",
+                  
                 },
                 labels: ["Total Points", "Performance"],
+                responsive: [
+                  {
+                    breakpoint: 480,
+                    options: {
+                      chart: {
+                        width: 200
+                      },
+                      legend: {
+                        position: 'bottom'
+                      }
+                    }
+                  },
+                  {
+                    breakpoint: 376,
+                    options: {
+                      chart: {
+                        width: 160
+                      },
+                      legend: {
+                        position: 'bottom'
+                      },
+                      dataLabels: {
+                        enabled: true,
+                       
+                        textAnchor: 'start',
+                      },
+                    }
+                  },
+                  {
+                    breakpoint: 285,
+                    options: {
+                      chart: {
+                        width: 104
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '10px',
+                        width:100
+                      },
+                      dataLabels: {
+                        enabled: false,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 900,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                  {
+                    breakpoint: 1030,
+                    options: {
+                      chart: {
+                        width: 230
+                      },
+                      legend: {
+                        position: 'bottom',
+                        fontSize: '15px',
+                        width:150
+                      },
+                      dataLabels: {
+                        enabled: true,
+                      },
+                      
+                    }
+                  },
+                 
+                ]
+               
               }}
               series={[30, ...data.tasks.map((task:FormTasks) => task.performance)]}
               type="pie"
-              height={isSmallScreen ? 300 : 400}
-            />
+              height="261px"   
+              minHeight="110px"         />
           </div>
         </div>
         {data.tasks.map((task:FormTasks, taskIndex:number) => (
@@ -525,9 +861,9 @@ const renderPieCharts = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white ml-4 py-2 px-4 rounded-md hover:bg-blue-600"
+            className="bg-blue-500 text-white  py-2 px-4 mb-7 sm:ml-7 rounded-md hover:bg-blue-600"
           >
-            Submit
+            Generate Performance Metric
           </button>
         </form>
         {isGenerated && (

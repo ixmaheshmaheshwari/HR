@@ -104,7 +104,7 @@ const EmployeeProfilePage: React.FC = () => {
             employeeData.map((employee: Employee) => (
               <div
                 key={employee.employeeId}
-                className="max-w-sm min-w-[23rem] rounded overflow-hidden shadow-lg bg-white mx-4 my-4 cursor-pointer"
+                className="max-w-sm sm:min-w-[15rem] min-w-[12rem] rounded overflow-hidden shadow-lg bg-white mx-4 my-4 cursor-pointer"
               >
                 <img
                   alt="Profile Photo"

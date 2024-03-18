@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 // import Example from "./components/sidebar/navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
+// import PerformanceForm from "./components/performancereview/performanceform";
 // import AttendanceTracking from "./components/attendancetracking/AttendanceTracking";
 // import Navbar from "./components/sidebar/navbar";
 // import TaskAssignment from "./components/taskassignment/TaskAssignment";
@@ -48,6 +49,8 @@ const ApplyLeaveForm = lazy(() => import("./components/leavemanagent/ApplyLeave"
 const LeaveTable = lazy(() => import("./components/leavemanagent/LeaveAction"));
 const AttendanceCalendar=lazy(()=> import("./components/attendancetracking/AttendanceTracker"))
 const AttendanceReport=lazy(()=> import("./components/attendancetracking/AttendanceGenerator"))
+const PerformanceForm=lazy(()=> import("./components/performancereview/performanceform"))
+const Performancegenerator=lazy(()=>import("./components/performancereview/PErformancegenerator"));
 
 function App() {
   const isAuthenticated = useSelector(
@@ -102,6 +105,12 @@ function App() {
                             path="/performance"
                             element={<PerformanceReview />}
                           />
+                          <Route
+                          path="/performance/form"
+                          element={<PerformanceForm/>}/>
+                           <Route
+                          path="/performance/generator"
+                          element={<Performancegenerator/>}/>
                         </>
                       )}
                       <Route path="/" element={<Dashboard />} />

@@ -49,7 +49,7 @@ const SearchableDropdown: React.FC<{ data: any; onSelect: (value: string) => voi
   return (
     <Select
       showSearch
-      className="w-4/12  search"
+      className="w-4/12  search hover:w-full z-50 focus-within:w-full "
       // className={`w-4/12 ${
       //   isFocused ? "focus:scale-105" : ""
       // } transition-transform focus:shadow-lg focus:bg-opacity-75`}

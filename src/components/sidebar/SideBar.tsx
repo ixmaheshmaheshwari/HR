@@ -6,13 +6,13 @@ import { FaTasks, FaUserPlus } from "react-icons/fa";
 import { FcLeave } from "react-icons/fc";
 import { IoPersonSharp } from "react-icons/io5";
 import { MdCoPresent } from "react-icons/md";
-import "./Sidebar.css";
-
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Content } from "antd/es/layout/layout";
 import { useSelector } from "react-redux";
 import { LoginState } from "../../redux/store/rootreducer";
 import { Link } from "react-router-dom";
+import "../sidebar/side.css";
+
 const { Sider } = Layout;
 
 
@@ -129,7 +129,20 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
       icon: <CgPerformance />,
       title: "Performance Reviews",
       link: "/performance",
-      roles: ["admin", "manager"]
+      roles: ["admin", "manager"],
+      submenu: [
+        {
+          key:"performance-form",
+        title: "Performance Form",
+        link: "/performance/form",
+        roles: ["admin",  "manager"],
+      },
+      {
+        key:"performance-generator",
+        title: "Performance Generator",
+        link: "/performance/generator",
+        roles: ["admin", "manager"],
+      },]
     },
     {
       key: "employee-onboarding",
@@ -167,7 +180,7 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
           theme="dark"
           mode="inline"
           style={{ top: 0 , overflowY: 'auto' }}
-          className="sm:collapsed " 
+          className="sm:collapsed mt-10 " 
         >
           <Button
           type="text"
@@ -185,14 +198,14 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
                   <Menu.SubMenu key={item.key} icon={item.icon} title={item.title} className="mt-10">
                     {item.submenu.map(subitem => (
                       subitem.roles.includes(role) && (
-                        <Menu.Item key={subitem.key}>
+                        <Menu.Item className="mt-10" key={subitem.key}>
                           <Link to={subitem?.link!}>{subitem.title}</Link>
                         </Menu.Item>
                       )
                     ))}
                   </Menu.SubMenu>
                 ) : (
-                  <Menu.Item key={item.key} icon={item.icon}>
+                  <Menu.Item className="" key={item.key} icon={item.icon}>
                     <Link to={item.link || '/'}>{item.title}</Link>
                   </Menu.Item>
                 )

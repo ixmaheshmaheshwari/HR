@@ -16,6 +16,7 @@ import hrms from './hrm.jpg';
 import fingerPrint from './fingerprint.jpg'
 import { Header } from "antd/es/layout/layout";
 import hrbackground from './hrback.jpg';
+import { useNavigate } from "react-router-dom";
 
 interface UserCredentials {
   email: string;
@@ -66,7 +67,7 @@ const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
-
+const navigate= useNavigate();
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -98,10 +99,12 @@ const Login = () => {
           console.log("userid")
         }
         toast.success("User logged in successfully");
+        navigate(`/dashboard`)
       } else {
         dispatch(loginFailure());
         toast.error("Invalid email or password");
       }
+
     } else {
       toast.error("User not found in local storage");
     }
