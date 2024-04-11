@@ -80,7 +80,7 @@ function App() {
                 <SideBar>
                   <main className="flex-1  overflow-y-auto ">
                     <Routes>
-                      {userRole === "admin" && (
+                      {(userRole === "admin" || userRole==="manager") && (
                         <>
                           <Route
                             path="/employeeform"
