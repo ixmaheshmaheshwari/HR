@@ -79,32 +79,41 @@ const navigate= useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const storedUser = localStorage.getItem("user");
+    console.log(storedUser)
     if (storedUser) {
-      const users: UserCredentials[] = JSON.parse(storedUser);
-      const matchedUser = users.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      if (matchedUser) {
-        dispatch(loginSuccess());
-        dispatch(setRole(matchedUser.role));
-        const storedEmployeeData = localStorage.getItem("employeesData");
-        const employeeData: Employee[] = storedEmployeeData? JSON.parse(storedEmployeeData):[];
-        const matchingEmployee = employeeData.find(
-          (employee) => employee.email === email
+      try {
+        const users: UserCredentials[] = JSON.parse(storedUser);
+        // Continue with your logic if JSON parsing succeeds
+        const matchedUser = users.find(
+          (user) => user.email === email && user.password === password
         );
-
-        if (matchingEmployee) {
-          dispatch(Set_UserId(matchingEmployee.employeeId));
-          console.log("userid")
+        if (matchedUser) {
+          dispatch(loginSuccess());
+          dispatch(setRole(matchedUser.role));
+          const storedEmployeeData = localStorage.getItem("employeesData");
+          const employeeData: Employee[] = storedEmployeeData? JSON.parse(storedEmployeeData):[];
+          const matchingEmployee = employeeData.find(
+            (employee) => employee.email === email
+          );
+  
+          if (matchingEmployee) {
+            dispatch(Set_UserId(matchingEmployee.employeeId));
+            console.log("userid")
+          }
+          toast.success("User logged in successfully");
+          navigate(`/dashboard`)
+        } else {
+          dispatch(loginFailure());
+          toast.error("Invalid email or password");
         }
-        toast.success("User logged in successfully");
-        navigate(`/dashboard`)
-      } else {
-        dispatch(loginFailure());
-        toast.error("Invalid email or password");
+  
+      } catch (error) {
+        console.error("Invalid JSON in localStorage:", error);
+        toast.error("Invalid data in localStorage. Please try again.");
+        return;
       }
-
+     
+      
     } else {
       toast.error("User not found in local storage");
     }

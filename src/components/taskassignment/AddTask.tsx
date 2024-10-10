@@ -188,22 +188,22 @@ const AddTask = () => {
   const onUpdate = () => {
     SetIsUpdate(true);
   };
-  // const data = [
-  //   {
-  //     description: "kjmn",
-  //     endDate: "30/03/2024",
-  //     priority: "high",
-  //     reminderDate: "22/03/2024",
-  //     startDate: "21/03/2024",
-  //     status: "open",
-  //     taskName: "kj",
-  //     taskOwner: "Mahesh",
-  //   },
-  // ];
+  const data = [
+    {
+      description: "kjmn",
+      endDate: "30/03/2024",
+      priority: "high",
+      reminderDate: "22/03/2024",
+      startDate: "21/03/2024",
+      status: "open",
+      taskName: "kj",
+      taskOwner: "Mahesh",
+    },
+  ];
 
-  // const dataString = JSON.stringify(data);
+  const dataString = JSON.stringify(data);
 
-  // localStorage.setItem("taskData", dataString);
+  localStorage.setItem("taskData", dataString);
 
   return (
     <div className="w-full">

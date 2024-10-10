@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 // import { Chart } from "react-google-charts";
-import { PieChart } from "@mui/x-charts/PieChart";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { createTheme } from "@mui/material";
 import "./dashboard.css";
-import { BarChart } from "@mui/x-charts/BarChart";
 // import { axisClasses } from "@mui/x-charts";
 import { useSelector } from "react-redux";
 import { LoginState } from "../../redux/store/rootreducer";
@@ -12,7 +8,6 @@ import moment from "moment";
 import ReactApexChart from "react-apexcharts";
 // import { number } from "yup";
 
-const theme = createTheme(); // Create your custom theme
 interface Leavellocated {
   employeeId: number;
   casualLeave: number;
@@ -75,12 +70,11 @@ interface Employee {
   employeeRole: "employee" | "manager" | "admin" | null;
 }
 const Dashboard = () => {
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [leavesAllocatedToUser, setLeavesAllocatedTouser] = useState<number>();
-  const [leavesRemainingToUser, setLeavesRemainingToUse] = useState<number>();
-  const [leavesAvailabelToUser, setLeavesAvailabelToUser] = useState<number>();
-
+  const [leavesAllocatedToUser, setLeavesAllocatedTouser] = useState<number>(0);
+  const [leavesRemainingToUser, setLeavesRemainingToUse] = useState<number>(0);
+  const [leavesAvailabelToUser, setLeavesAvailabelToUser] = useState<number>(0);
+ 
+  
   const userRole = useSelector(
     (state: { auth: LoginState }) => state.auth.role
   );
@@ -161,34 +155,34 @@ const Dashboard = () => {
    
   ];
   // console.log(totalLeaves, approvedLeaves);
-  const chartSetting = {
-    yAxis: [
-      {
-        label: "Staff Turnover",
-      },
-    ],
-    width: isSmallScreen ? 300 : 500,
-    height: 400,
-    // sx: {
-    //   [`.${axisClasses.left} .${axisClasses.label}`]: {
-    //     transform: "translate(-20px, 0)",
-    //   },
-    // },
-  };
-  const taskSetting = {
-    yAxis: [
-      {
-        label: "Tasks",
-      },
-    ],
-    width: isSmallScreen ? 300 : 500,
-    height: 400,
-    // sx: {
-    //   [`.${axisClasses.left} .${axisClasses.label}`]: {
-    //     transform: "translate(-20px, 0)",
-    //   },
-    // },
-  };
+  // const chartSetting = {
+  //   yAxis: [
+  //     {
+  //       label: "Staff Turnover",
+  //     },
+  //   ],
+  //   width:  500,
+  //   height: 400,
+  //   // sx: {
+  //   //   [`.${axisClasses.left} .${axisClasses.label}`]: {
+  //   //     transform: "translate(-20px, 0)",
+  //   //   },
+  //   // },
+  // };
+  // const taskSetting = {
+  //   yAxis: [
+  //     {
+  //       label: "Tasks",
+  //     },
+  //   ],
+  //   width:  500,
+  //   height: 400,
+  //   // sx: {
+  //   //   [`.${axisClasses.left} .${axisClasses.label}`]: {
+  //   //     transform: "translate(-20px, 0)",
+  //   //   },
+  //   // },
+  // };
   const pieSeries = [
     { label: "Leave Applied", value: totalLeaves },
     { label: "Leave Approved", value: approvedLeaves },
@@ -226,7 +220,7 @@ const Dashboard = () => {
     { month: "Nov", task: 7 },
     { month: "Dec", task: 3 },
   ];
-  const valueFormatter = (value: number) => `${value}%`;
+  // const valueFormatter = (value: number) => `${value}%`;
 
   useEffect(() => {
     const storedTask = localStorage.getItem("taskData");
@@ -270,13 +264,12 @@ const Dashboard = () => {
     const employeeleaveRemaining = allUserleaveRemanining.find(
       (leaveAllocated: Leavellocated) => leaveAllocated.employeeId === userId
     );
-    const allocatedLeaves = Object.entries(employeeleaveRemaining)
-      .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
-      .reduce((accumulator: number, [, value]: [string, unknown]) => {
-        // Convert the unknown value to a number before adding to the accumulator
+    const allocatedLeaves = Object.entries(employeeleaveRemaining || {})
+    .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
+    .reduce((accumulator: number, [, value]: [string, unknown]) => {
         const numericValue = typeof value === "number" ? value : 0;
         return accumulator + numericValue;
-      }, 0);
+    }, 0);
     setLeavesAvailabelToUser(allocatedLeaves);
 
     console.log("rem", allocatedLeaves);
@@ -287,10 +280,10 @@ const Dashboard = () => {
     const allUserleaveBooked = storeLeaveBooked
       ? JSON.parse(storeLeaveBooked)
       : [];
-    const employeeleaveBooked = allUserleaveBooked.find(
+    const employeeleaveBooked = allUserleaveBooked?.find(
       (leaveBooked: Leavellocated) => leaveBooked.employeeId === userId
     );
-    const bookedLeaves = Object.entries(employeeleaveBooked)
+    const bookedLeaves = Object.entries(employeeleaveBooked||{})
       .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
       .reduce((accumulator: number, [, value]: [string, unknown]) => {
         // Convert the unknown value to a number before adding to the accumulator
@@ -472,7 +465,7 @@ const Dashboard = () => {
                       }}
                       series={pieSeries.map((item) => item.value)}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                   </div>
                 </div>
@@ -569,7 +562,7 @@ const Dashboard = () => {
                       }}
                       series={declineSeries.map((item) => item.value)}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                   </div>{" "}
                 </div>
@@ -670,7 +663,7 @@ const Dashboard = () => {
                         3, // Value for Dubai
                       ]}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                   </div>{" "}
                 </div>
@@ -769,7 +762,7 @@ const Dashboard = () => {
                         20,
                       ]}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                   </div>
                 </div>
@@ -966,7 +959,7 @@ const Dashboard = () => {
                       },
                     ]}
                     type="bar"
-                    width={isSmallScreen ? 300 : 500}
+                    width={ 500}
                     height={400}
                   />
 
@@ -1145,7 +1138,7 @@ const Dashboard = () => {
                       }}
                       series={userpieSeries.map((item) => item.value)}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                     
                   </div>
@@ -1247,7 +1240,7 @@ const Dashboard = () => {
                       }}
                       series={userdeclineSeries.map((item) => item.value)}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                    
                   </div>{" "}
@@ -1353,7 +1346,7 @@ const Dashboard = () => {
                         3, // Value for Dubai
                       ]}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                   </div>{" "}
                 </div>
@@ -1456,7 +1449,7 @@ const Dashboard = () => {
                         20,
                       ]}
                       type="pie"
-                      height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
+                      height={ 400} // Adjust height based on screen size
                     />
                   </div>
                 </div>
@@ -1649,7 +1642,7 @@ const Dashboard = () => {
                       },
                     ]}
                     type="bar"
-                    width={isSmallScreen ? 300 : 500}
+                    width={ 500}
                     height={400}
                   />
                  

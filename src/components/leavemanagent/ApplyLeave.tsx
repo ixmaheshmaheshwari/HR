@@ -123,49 +123,49 @@ const ApplyLeaveForm = () => {
     );
     setEmployees(filteredEmployee);
 
-    //     const data = [
-    //         {"employeeId":1,"earnedLeave":0,"marriageLeave":0,"casualLeave":0,"optionalHoliday":0,"sickLeave":0,"leaveWithoutPay":0},
-    //         {"employeeId":2,"earnedLeave":4,"marriageLeave":3,"casualLeave":3,"optionalHoliday":2,"sickLeave":4,"leaveWithoutPay":0},
-    //         {"employeeId":3,"earnedLeave":4,"marriageLeave":3,"casualLeave":3,"optionalHoliday":2,"sickLeave":4,"leaveWithoutPay":0},
-    //         {"employeeId":4,"earnedLeave":4,"marriageLeave":3,"casualLeave":3,"optionalHoliday":2,"sickLeave":4,"leaveWithoutPay":0}
-    //       ];
+        const data = [
+            {"employeeId":1,"earnedLeave":0,"marriageLeave":0,"casualLeave":0,"optionalHoliday":0,"sickLeave":0,"leaveWithoutPay":0},
+            {"employeeId":2,"earnedLeave":4,"marriageLeave":3,"casualLeave":3,"optionalHoliday":2,"sickLeave":4,"leaveWithoutPay":0},
+            {"employeeId":3,"earnedLeave":4,"marriageLeave":3,"casualLeave":3,"optionalHoliday":2,"sickLeave":4,"leaveWithoutPay":0},
+            {"employeeId":4,"earnedLeave":4,"marriageLeave":3,"casualLeave":3,"optionalHoliday":2,"sickLeave":4,"leaveWithoutPay":0}
+          ];
 
-    //       const newData = data.map(employee => ({
-    //         ...employee,
-    //         earnedLeave: 0,
-    //         marriageLeave: 0,
-    //         casualLeave: 0,
-    //         optionalHoliday: 0,
-    //         sickLeave: 0,
-    //         leaveWithoutPay: 0
-    //       }));
+          const newData = data.map(employee => ({
+            ...employee,
+            earnedLeave: 0,
+            marriageLeave: 0,
+            casualLeave: 0,
+            optionalHoliday: 0,
+            sickLeave: 0,
+            leaveWithoutPay: 0
+          }));
 
-    //       console.log(newData);
-    // localStorage.setItem("leaveBooked",JSON.stringify(newData))
+          console.log(newData);
+    localStorage.setItem("leaveBooked",JSON.stringify(newData))
     // Generate leave options based on available leaves for each employee
-    const leaveOptionsData = [
-      { key: "earnedLeave", label: "Earned Leave" },
-      { key: "marriageLeave", label: "Marriage Leave" },
-      { key: "casualLeave", label: "Casual Leave" },
-      { key: "optionalHoliday", label: "Optional Holiday" },
-      { key: "sickLeave", label: "Sick Leave" },
-      { key: "leaveWithoutPay", label: "Leave Without Pay" },
-    ];
-    setLeaveOptions(leaveOptionsData);
-
-    // const leaveOptionsData = employeesData.map((employee) => ({
-    //     employeeId: employee.employeeId,
-    //       earnedLeave: 4,
-    //       marriageLeave: 3,
-    //       casualLeave: 3,
-    //       optionalHoliday: 2,
-    //       sickLeave: 4,
-    //       leaveWithoutPay: 0,
-
-    //   }));
-    // localStorage.setItem("leaveData",JSON.stringify(leaveOptionsData))
-
+    // const leaveOptionsData = [
+    //   { key: "earnedLeave", label: "Earned Leave" },
+    //   { key: "marriageLeave", label: "Marriage Leave" },
+    //   { key: "casualLeave", label: "Casual Leave" },
+    //   { key: "optionalHoliday", label: "Optional Holiday" },
+    //   { key: "sickLeave", label: "Sick Leave" },
+    //   { key: "leaveWithoutPay", label: "Leave Without Pay" },
+    // ];
     // setLeaveOptions(leaveOptionsData);
+
+    const leaveOptionsData = employeesData.map((employee) => ({
+        employeeId: employee.employeeId,
+          earnedLeave: 4,
+          marriageLeave: 3,
+          casualLeave: 3,
+          optionalHoliday: 2,
+          sickLeave: 4,
+          leaveWithoutPay: 0,
+
+      }));
+    localStorage.setItem("leaveData",JSON.stringify(leaveOptionsData))
+
+    setLeaveOptions(leaveOptionsData);
   }, []);
   const {
     control,

@@ -15,12 +15,9 @@ import "../sidebar/side.css";
 
 const { Sider } = Layout;
 
-
 interface SidebarProps {
   children: React.ReactNode;
 }
-
-
 
 interface MenuItem {
   key: string;
@@ -31,7 +28,7 @@ interface MenuItem {
   submenu?: MenuItem[]; // Add submenu as optional
 }
 
-const Sidebar: React.FC <SidebarProps>= ({children}) => {
+const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const role = useSelector((state: { auth: LoginState }) => state.auth.role);
 
@@ -41,87 +38,87 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
       icon: <RxDashboard />,
       title: "Dashboard",
       link: "/dashboard",
-      roles: ["admin", "employee","manager"],
+      roles: ["admin", "employee", "manager"],
     },
     {
       key: "employee-directory",
       icon: <IoPersonSharp />,
       title: "Employee Directory",
       link: "/employee",
-      roles: ["admin","employee","manager"],
+      roles: ["admin", "employee", "manager"],
     },
     {
       key: "attendance-tracking",
       icon: <MdCoPresent />,
       title: "Attendance Tracking",
       link: "",
-      roles:["admin","manager","employee"],
+      roles: ["admin", "manager", "employee"],
       submenu: [
         {
-          key:"attendance-marker",
-        title: "Attendance Marker",
-        link: "/attendence/marker",
-        roles: ["admin", "employee", "manager"],
-      },
-      {
-        key:"attendance-report",
-        title: "Attendance Report Generator",
-        link: "/attendence/generator",
-        roles: ["admin", "manager"],
-      },]
+          key: "attendance-marker",
+          title: "Attendance Marker",
+          link: "/attendence/marker",
+          roles: ["admin", "employee", "manager"],
+        },
+        {
+          key: "attendance-report",
+          title: "Attendance Report Generator",
+          link: "/attendence/generator",
+          roles: ["admin", "manager"],
+        },
+      ],
     },
     {
       key: "leave-management",
       icon: <FcLeave />,
       title: "Leave Management",
       link: "/leave",
-      roles: ["admin", "employee","manager"],
+      roles: ["admin", "employee", "manager"],
       submenu: [
         {
-          key:"leave-view",
-        title: "Leave View",
-        link: "/leave/view",
-        roles: ["admin", "employee", "manager"],
-      },
-      {
-        key:"leave-action",
-        title: "Leave Action",
-        link: "/leave/action",
-        roles: ["admin", "manager"],
-      },
-      {
-        key:"apply-leave",
-        title: "Apply Leave",
-        link: "/leave/apply",
-        roles: ["admin", "employee", "manager"],
-      },
+          key: "leave-view",
+          title: "Leave View",
+          link: "/leave/view",
+          roles: ["admin", "employee", "manager"],
+        },
+        {
+          key: "leave-action",
+          title: "Leave Action",
+          link: "/leave/action",
+          roles: ["admin", "manager"],
+        },
+        {
+          key: "apply-leave",
+          title: "Apply Leave",
+          link: "/leave/apply",
+          roles: ["admin", "employee", "manager"],
+        },
       ],
     },
     {
       key: "task-assignments",
       icon: <FaTasks />,
       title: "Task Assignments",
-      roles: ["admin", "employee","manager"],
+      roles: ["admin", "employee", "manager"],
       submenu: [
         {
           key: "add-task",
           title: "Add Task",
-          roles: ["admin", "employee","manager"],
+          roles: ["admin", "employee", "manager"],
           link: "/add-task",
         },
         {
           key: "assign-task",
           title: "Assign Task",
-          roles: ["admin","manager"],
+          roles: ["admin", "manager"],
           link: "/assign-task",
         },
         {
           key: "track-task",
           title: "Track Task",
-          roles: ["admin", "employee","manager"],
+          roles: ["admin", "employee", "manager"],
           link: "/track-task",
         },
-        
       ],
     },
     {
@@ -132,17 +129,18 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
       roles: ["admin", "manager"],
       submenu: [
         {
-          key:"performance-form",
-        title: "Performance Form",
-        link: "/performance/form",
-        roles: ["admin",  "manager"],
-      },
-      {
-        key:"performance-generator",
-        title: "Performance Generator",
-        link: "/performance/generator",
-        roles: ["admin", "manager"],
-      },]
+          key: "performance-form",
+          title: "Performance Form",
+          link: "/performance/form",
+          roles: ["admin", "manager"],
+        },
+        {
+          key: "performance-generator",
+          title: "Performance Generator",
+          link: "/performance/generator",
+          roles: ["admin", "manager"],
+        },
+      ],
     },
     {
       key: "employee-onboarding",
@@ -151,7 +149,6 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
       link: "/employeeform",
       roles: ["admin"],
     },
-    
   ];
 
   // const toggleCollapse = () => {
@@ -164,8 +161,11 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
   };
 
   return (
-    <Layout className="overflow-y-scroll" style={{ width: "auto", height: "100vh" }}>
-        <Sider
+    <Layout
+      className="overflow-y-scroll"
+      style={{ width: "auto", height: "100vh" }}
+    >
+      <Sider
         collapsible
         trigger={null}
         collapsed={collapsed}
@@ -173,52 +173,56 @@ const Sidebar: React.FC <SidebarProps>= ({children}) => {
         breakpoint="sm"
         onBreakpoint={handleBreakpointChange}
         onCollapse={setCollapsed}
-        className={`${collapsed ? 'collapsed' : ''} sm:w-fit w-[100%]   `}
-        >
-          
+        className={`${collapsed ? "collapsed" : ""} sm:w-fit w-[100%]   `}
+      >
         <Menu
           theme="dark"
           mode="inline"
-          style={{ top: 0 , overflowY: 'auto' }}
-          className="sm:collapsed mt-10 " 
+          style={{ top: 0, overflowY: "auto" }}
+          className="sm:collapsed mt-10 "
         >
           <Button
-          type="text"
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            fontSize: "23px !important",
-            backgroundColor: "#001529",
-            color: "white",
-          }}/>
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: "23px !important",
+              backgroundColor: "#001529",
+              color: "white",
+            }}
+          />
           {menuItems.map((item) => (
             <>
-              {item.roles.includes(role) && (
-                item.submenu ? (
-                  <Menu.SubMenu key={item.key} icon={item.icon} title={item.title} className="mt-10">
-                    {item.submenu.map(subitem => (
-                      subitem.roles.includes(role) && (
-                        <Menu.Item className="mt-10" key={subitem.key}>
-                          <Link to={subitem?.link!}>{subitem.title}</Link>
-                        </Menu.Item>
-                      )
-                    ))}
+              {item.roles.includes(role) &&
+                (item.submenu ? (
+                  <Menu.SubMenu
+                    key={item.key}
+                    icon={item.icon}
+                    title={item.title}
+                    className="mt-10"
+                  >
+                    {item.submenu.map(
+                      (subitem) =>
+                        subitem.roles.includes(role) && (
+                          <Menu.Item className="mt-10" key={subitem.key}>
+                            <Link to={subitem?.link!}>{subitem.title}</Link>
+                          </Menu.Item>
+                        )
+                    )}
                   </Menu.SubMenu>
                 ) : (
                   <Menu.Item className="" key={item.key} icon={item.icon}>
-                    <Link to={item.link || '/'}>{item.title}</Link>
+                    <Link to={item.link || "/"}>{item.title}</Link>
                   </Menu.Item>
-                )
-              )}
+                ))}
             </>
           ))}
         </Menu>
       </Sider>
-      
-<Content className="overflow-y-auto ">
-    <div className="content">{children}</div>
-  </Content>
-      
+
+      <Content className="overflow-y-auto ">
+        <div className="content">{children}</div>
+      </Content>
     </Layout>
   );
 };
