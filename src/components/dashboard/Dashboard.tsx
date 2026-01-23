@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 // import { Chart } from "react-google-charts";
-import { PieChart } from "@mui/x-charts/PieChart";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme } from "@mui/material";
 import "./dashboard.css";
-import { BarChart } from "@mui/x-charts/BarChart";
 // import { axisClasses } from "@mui/x-charts";
 import { useSelector } from "react-redux";
 import { LoginState } from "../../redux/store/rootreducer";
@@ -76,7 +74,6 @@ interface Employee {
 }
 const Dashboard = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [leavesAllocatedToUser, setLeavesAllocatedTouser] = useState<number>();
   const [leavesRemainingToUser, setLeavesRemainingToUse] = useState<number>();
   const [leavesAvailabelToUser, setLeavesAvailabelToUser] = useState<number>();
@@ -148,47 +145,19 @@ const Dashboard = () => {
   ).length;
 
   const userpieSeries = [
-   
-     
-        { label: "Leave Applied", value: usertotalLeaves },
-        { label: "Leave Approved", value: userapprovedLeaves },
-   
+
+
+    { label: "Leave Applied", value: usertotalLeaves },
+    { label: "Leave Approved", value: userapprovedLeaves },
+
   ];
   const userdeclineSeries = [
-   
-        { label: "Leave Applied", value: usertotalLeaves },
-        { label: "Leave Declined", value: userdeclinedLeaves },
-   
+
+    { label: "Leave Applied", value: usertotalLeaves },
+    { label: "Leave Declined", value: userdeclinedLeaves },
+
   ];
-  // console.log(totalLeaves, approvedLeaves);
-  const chartSetting = {
-    yAxis: [
-      {
-        label: "Staff Turnover",
-      },
-    ],
-    width: isSmallScreen ? 300 : 500,
-    height: 400,
-    // sx: {
-    //   [`.${axisClasses.left} .${axisClasses.label}`]: {
-    //     transform: "translate(-20px, 0)",
-    //   },
-    // },
-  };
-  const taskSetting = {
-    yAxis: [
-      {
-        label: "Tasks",
-      },
-    ],
-    width: isSmallScreen ? 300 : 500,
-    height: 400,
-    // sx: {
-    //   [`.${axisClasses.left} .${axisClasses.label}`]: {
-    //     transform: "translate(-20px, 0)",
-    //   },
-    // },
-  };
+
   const pieSeries = [
     { label: "Leave Applied", value: totalLeaves },
     { label: "Leave Approved", value: approvedLeaves },
@@ -198,6 +167,7 @@ const Dashboard = () => {
     { label: "Leave Applied", value: totalLeaves },
     { label: "Leave Declined", value: declinedLeaves },
   ];
+
   const staffTurnoverData = [
     { month: "Jan", turnover: 5 },
     { month: "Feb", turnover: 7 },
@@ -212,6 +182,7 @@ const Dashboard = () => {
     { month: "Nov", turnover: 3 },
     { month: "Dec", turnover: 7 },
   ];
+
   const userTaskCompleted = [
     { month: "Jan", task: 2 },
     { month: "Feb", task: 4 },
@@ -226,7 +197,7 @@ const Dashboard = () => {
     { month: "Nov", task: 7 },
     { month: "Dec", task: 3 },
   ];
-  const valueFormatter = (value: number) => `${value}%`;
+
 
   useEffect(() => {
     const storedTask = localStorage.getItem("taskData");
@@ -245,13 +216,19 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const storeLeaveAllocated = localStorage.getItem("leaveAllocated");
+    const storeLeaveAllocated = localStorage.getItem("leaveAllocated") || localStorage.getItem("leaveData");
     const allUserleaveAllocated = storeLeaveAllocated
       ? JSON.parse(storeLeaveAllocated)
       : [];
     const employeeleaveAllocated = allUserleaveAllocated.find(
       (leaveAllocated: Leavellocated) => leaveAllocated.employeeId === userId
     );
+
+    if (!employeeleaveAllocated) {
+      setLeavesAllocatedTouser(0);
+      return;
+    }
+
     const allocatedLeaves = Object.entries(employeeleaveAllocated)
       .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
       .reduce((accumulator: number, [, value]: [string, unknown]) => {
@@ -261,7 +238,7 @@ const Dashboard = () => {
       }, 0);
     setLeavesAllocatedTouser(allocatedLeaves);
     console.log(allocatedLeaves);
-  }, []);
+  }, [userId]);
   useEffect(() => {
     const storeLeaveRemianing = localStorage.getItem("leaveAvailable");
     const allUserleaveRemanining = storeLeaveRemianing
@@ -270,6 +247,12 @@ const Dashboard = () => {
     const employeeleaveRemaining = allUserleaveRemanining.find(
       (leaveAllocated: Leavellocated) => leaveAllocated.employeeId === userId
     );
+
+    if (!employeeleaveRemaining) {
+      setLeavesAvailabelToUser(0);
+      return;
+    }
+
     const allocatedLeaves = Object.entries(employeeleaveRemaining)
       .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
       .reduce((accumulator: number, [, value]: [string, unknown]) => {
@@ -280,7 +263,7 @@ const Dashboard = () => {
     setLeavesAvailabelToUser(allocatedLeaves);
 
     console.log("rem", allocatedLeaves);
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const storeLeaveBooked = localStorage.getItem("leaveBooked");
@@ -290,6 +273,12 @@ const Dashboard = () => {
     const employeeleaveBooked = allUserleaveBooked.find(
       (leaveBooked: Leavellocated) => leaveBooked.employeeId === userId
     );
+
+    if (!employeeleaveBooked) {
+      setLeavesRemainingToUse(0);
+      return;
+    }
+
     const bookedLeaves = Object.entries(employeeleaveBooked)
       .filter(([key]) => key !== "employeeId") // Exclude the employeeId key
       .reduce((accumulator: number, [, value]: [string, unknown]) => {
@@ -300,7 +289,7 @@ const Dashboard = () => {
     setLeavesRemainingToUse(bookedLeaves);
 
     console.log(bookedLeaves);
-  });
+  }, [userId]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -860,7 +849,7 @@ const Dashboard = () => {
                               position: "bottom",
                             },
                             dataLabels: {
-                            
+
                             },
                           },
                         },
@@ -874,7 +863,7 @@ const Dashboard = () => {
                               position: "bottom",
                             },
                             dataLabels: {
-                            
+
                             },
                           },
                         },
@@ -888,7 +877,7 @@ const Dashboard = () => {
                               position: "bottom",
                             },
                             dataLabels: {
-                            
+
                             },
                           },
                         },
@@ -952,7 +941,7 @@ const Dashboard = () => {
                         bar: {
                           horizontal: false, // Set bars to vertical orientation
                           columnWidth: "50%", // Adjust bar width
-                         
+
                         },
                       },
                       grid: {
@@ -1054,8 +1043,8 @@ const Dashboard = () => {
                     Leave Approval Till Today
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 logo">
-                  
-                  <ReactApexChart
+
+                    <ReactApexChart
                       options={{
                         chart: {
                           type: "pie",
@@ -1147,7 +1136,7 @@ const Dashboard = () => {
                       type="pie"
                       height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
-                    
+
                   </div>
                 </div>
 
@@ -1157,7 +1146,7 @@ const Dashboard = () => {
                     Leave Declined Till Today
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 leave">
-                  <ReactApexChart
+                    <ReactApexChart
                       options={{
                         chart: {
                           type: "pie",
@@ -1249,7 +1238,7 @@ const Dashboard = () => {
                       type="pie"
                       height={isSmallScreen ? 200 : 400} // Adjust height based on screen size
                     />
-                   
+
                   </div>{" "}
                 </div>
 
@@ -1259,7 +1248,7 @@ const Dashboard = () => {
                     Employees Location
                   </h3>
                   <div className=" h-56 md:h-80 lg:h-96 employee">
-                  <ReactApexChart
+                    <ReactApexChart
                       options={{
                         chart: {
                           type: "pie",
@@ -1363,7 +1352,7 @@ const Dashboard = () => {
                     Remote vs Onsite
                   </h3>
                   <div className="w-full h-64 md:h-80 lg:h-96">
-                  <ReactApexChart
+                    <ReactApexChart
                       options={{
                         chart: {
                           type: "pie",
@@ -1475,7 +1464,7 @@ const Dashboard = () => {
                       xaxis: {
                         categories: userTaskCompleted.map((data) => data.month), // Define x-axis categories
                         labels: {
-                          
+
 
                           style: {
                             fontSize: "12px", // Adjust x-axis label font size
@@ -1543,7 +1532,7 @@ const Dashboard = () => {
                               position: "bottom",
                             },
                             dataLabels: {
-                            
+
                             },
                           },
                         },
@@ -1557,7 +1546,7 @@ const Dashboard = () => {
                               position: "bottom",
                             },
                             dataLabels: {
-                            
+
                             },
                           },
                         },
@@ -1571,7 +1560,7 @@ const Dashboard = () => {
                               position: "bottom",
                             },
                             dataLabels: {
-                            
+
                             },
                           },
                         },
@@ -1635,7 +1624,7 @@ const Dashboard = () => {
                         bar: {
                           horizontal: false, // Set bars to vertical orientation
                           columnWidth: "50%", // Adjust bar width
-                         
+
                         },
                       },
                       grid: {
@@ -1652,7 +1641,7 @@ const Dashboard = () => {
                     width={isSmallScreen ? 300 : 500}
                     height={400}
                   />
-                 
+
                 </div>
               </div>
             </>

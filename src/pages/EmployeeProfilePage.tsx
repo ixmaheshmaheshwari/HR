@@ -1,4 +1,6 @@
 import React from "react";
+import { Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -46,8 +48,8 @@ interface Employee {
   department: string;
   position: string;
   imageUrl?: string;
-  jobHistory?: JobHistoryEntry [];
-  skills: {skillName:string}[];
+  jobHistory?: JobHistoryEntry[];
+  skills: { skillName: string }[];
   performanceMetrics: {
     metric: string;
     value: number;
@@ -56,7 +58,7 @@ interface Employee {
 const EmployeeProfilePage: React.FC = () => {
   // const history = useHistory();
   const navigate = useNavigate(); // Get the navigate function
-  const role = useSelector((state: { auth: LoginState }) => state.auth.role );
+  const role = useSelector((state: { auth: LoginState }) => state.auth.role);
 
   const storedEmployeeData = localStorage.getItem("employeesData");
   const employeeData: Employee[] = JSON.parse(storedEmployeeData || "[]");
@@ -73,8 +75,8 @@ const EmployeeProfilePage: React.FC = () => {
     );
     const storedlogindetais = localStorage.getItem("user");
     let logindetail: UserInfo[] = storedlogindetais
-    ? JSON.parse(storedlogindetais)
-    : [];
+      ? JSON.parse(storedlogindetais)
+      : [];
     const matchingEmployee = employeeData.find(
       (employee) => employee?.employeeId === employeeId
     );
@@ -98,75 +100,79 @@ const EmployeeProfilePage: React.FC = () => {
 
   return (
     <div>
-     
-        <div className="flex flex-wrap justify-center    items-start">
-          {employeeData.length > 0 ? (
-            employeeData.map((employee: Employee) => (
-              <div
-                key={employee.employeeId}
-                className="max-w-sm sm:min-w-[15rem] min-w-[12rem] rounded overflow-hidden shadow-lg bg-white mx-4 my-4 cursor-pointer"
-              >
-                <img
-                  alt="Profile Photo"
-                  className="w-[127px] h-[127px] ml-auto mr-auto bg-center justify-center rounded-full pt-3"
-                  src={employee.imageUrl}
+
+      <div className="flex flex-wrap justify-center    items-start">
+        {employeeData.length > 0 ? (
+          employeeData.map((employee: Employee) => (
+            <div
+              key={employee.employeeId}
+              className="max-w-sm sm:min-w-[15rem] min-w-[12rem] rounded overflow-hidden shadow-lg bg-white mx-4 my-4 cursor-pointer"
+            >
+              <div className="flex justify-center pt-3 pb-2">
+                <Avatar
+                  size={127}
+                  src={employee.imageUrl || undefined}
+                  icon={<UserOutlined />}
+                  style={{
+                    backgroundColor: '#1890ff',
+                  }}
                 />
-                <div className="px-6 py-4">
-                  <div className="font-bold text-xl mb-2">
-                    {employee.firstName}
-                  </div>
-                  <p className="text-gray-700 text-base mb-2">
-                    {employee.position}
-                  </p>
-                  <p className="text-gray-700 text-base mb-2">
-                    {employee.department}
-                  </p>
-                  <p className="text-gray-700 text-base mb-2">
-                    {employee.email}
-                  </p>
-                 {role==="employee" && <div className="flex justify-between">
-                 <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                        onClick={() => handleCardClick(employee.employeeId)}
-                        >
-                        View Profile
-                      </button>
-                  </div>
-                  } 
-                  {(role === "admin" || role ==="manager") && (
-                    <div className="flex justify-between">
+              </div>
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">
+                  {employee.firstName}
+                </div>
+                <p className="text-gray-700 text-base mb-2">
+                  {employee.position}
+                </p>
+                <p className="text-gray-700 text-base mb-2">
+                  {employee.department}
+                </p>
+                <p className="text-gray-700 text-base mb-2">
+                  {employee.email}
+                </p>
+                {role === "employee" && (
+                  <div className="flex flex-col gap-2 mt-2">
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded "
-                        onClick={() => handleCardClick(employee.employeeId)}
-                        >
-                        View Profile
-                      </button>
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full"
+                      onClick={() => handleCardClick(employee.employeeId)}
+                    >
+                      View Profile
+                    </button>
+                  </div>
+                )}
+                {(role === "admin" || role === "manager") && (
+                  <div className="flex flex-col gap-2 mt-2">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full"
+                      onClick={() => handleCardClick(employee.employeeId)}
+                    >
+                      View Profile
+                    </button>
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full"
+                      onClick={() => handleUpdate(employee.employeeId)}
+                    >
+                      Update
+                    </button>
+                    {role === "admin" && (
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                        onClick={() => handleUpdate(employee.employeeId)}
-                      >
-                        Update
-                      </button></div>
-                      )
-                      }
-                      {(role === "admin") &&(
-                        <div className="flex justify-between ml-auto ">
-                      <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 left-1 mt-[-36px] rounded ml-auto mr-auto"
+                        className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded w-full"
                         onClick={() => handleDelete(employee.employeeId)}
                       >
                         Delete
                       </button>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                )}
               </div>
-            ))
-          ) : (
-            <p>No employee data found in local storage.</p>
-          )}
-        </div>
-      
+            </div>
+          ))
+        ) : (
+          <p>No employee data found in local storage.</p>
+        )}
+      </div>
+
     </div>
   );
 };

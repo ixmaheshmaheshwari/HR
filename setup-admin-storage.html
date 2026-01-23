@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRMS - Setup Admin User</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .status {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge.success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge.empty {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 HRMS Local Storage Setup</h1>
+        <p class="subtitle">Initialize admin user and required data structures</p>
+        
+        <div id="message" class="message"></div>
+        
+        <form id="setupForm">
+            <div class="form-group">
+                <label>Employee ID <span class="required">*</span></label>
+                <input type="number" id="employeeId" value="1001" required>
+            </div>
+            
+            <div class="form-group">
+                <label>First Name <span class="required">*</span></label>
+                <input type="text" id="firstName" value="Admin" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Last Name <span class="required">*</span></label>
+                <input type="text" id="lastName" value="User" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" id="email" value="admin@hrms.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Password <span class="required">*</span></label>
+                <input type="password" id="password" value="admin123" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phoneNumber" value="1234567890" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Department <span class="required">*</span></label>
+                <input type="text" id="department" value="Administration" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Position <span class="required">*</span></label>
+                <input type="text" id="position" value="System Administrator" required>
+            </div>
+            
+            <button type="submit" class="btn">Create Admin User</button>
+        </form>
+        
+        <div class="divider"></div>
+        
+        <button onclick="checkStatus()" class="btn btn-secondary">Check Current Status</button>
+        <button onclick="clearAllData()" class="btn btn-danger">Clear All Data</button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+    </div>
+    
+    <script>
+        function showMessage(message, type = 'info') {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        function getCurrentDate() {
+            return new Date().toISOString().split('T')[0];
+        }
+        
+        document.getElementById('setupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const employeeId = parseInt(document.getElementById('employeeId').value);
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const phoneNumber = parseInt(document.getElementById('phoneNumber').value);
+            const department = document.getElementById('department').value.trim();
+            const position = document.getElementById('position').value.trim();
+            
+            // Validate inputs
+            if (!employeeId || !firstName || !lastName || !email || !password || !phoneNumber || !department || !position) {
+                showMessage('Please fill in all required fields!', 'error');
+                return;
+            }
+            
+            try {
+                // Get existing data or initialize empty arrays
+                const existingEmployees = JSON.parse(localStorage.getItem('employeesData') || '[]');
+                const existingUsers = JSON.parse(localStorage.getItem('user') || '[]');
+                
+                // Check if employee ID already exists
+                const employeeExists = existingEmployees.find(emp => emp.employeeId === employeeId);
+                if (employeeExists) {
+                    showMessage(`Employee ID ${employeeId} already exists!`, 'error');
+                    return;
+                }
+                
+                // Check if email already exists
+                const emailExists = existingUsers.find(user => user.email === email);
+                if (emailExists) {
+                    showMessage(`Email ${email} already exists!`, 'error');
+                    return;
+                }
+                
+                const currentDate = getCurrentDate();
+                
+                // Create admin employee data
+                const adminEmployee = {
+                    employeeId: employeeId,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    phoneNumber: phoneNumber,
+                    department: department,
+                    position: position,
+                    role: "admin",
+                    employeeRole: "admin",
+                    addedBy: "System",
+                    addedTime: currentDate,
+                    dateOfJoining: currentDate,
+                    birthDate: currentDate,
+                    reportingTo: "Self",
+                    leadPosition: "Administrator",
+                    employeeStatus: "Active",
+                    employeeType: "Full-time",
+                    martialStatus: "Single",
+                    timeZone: "GMT+5:30",
+                    imageUrl: `https://avatar.iran.liara.run/username?username=${firstName}+${lastName}`,
+                    skills: [],
+                    jobHistory: [],
+                    secondaryReportingTo: null,
+                    sourceOfHire: "System",
+                    seatingPosition: "",
+                    locationofOffice: "",
+                    workPhone: null,
+                    extension: "",
+                    otherEmail: "",
+                    address: "",
+                    jobDescription: "System Administrator",
+                    aboutMe: "",
+                    expertiseaboutme: ""
+                };
+                
+                // Create login credentials
+                const adminUserCredentials = {
+                    email: email,
+                    password: password,
+                    role: "admin",
+                    employeeId: employeeId
+                };
+                
+                // Create leave data for admin
+                const leaveData = {
+                    employeeId: employeeId,
+                    earnedLeave: 20,
+                    marriageLeave: 20,
+                    casualLeave: 20,
+                    optionalHoliday: 20,
+                    sickLeave: 20,
+                    leaveWithoutPay: 20
+                };
+                
+                const leaveBookedData = {
+                    employeeId: employeeId,
+                    earnedLeave: 0,
+                    marriageLeave: 0,
+                    casualLeave: 0,
+                    optionalHoliday: 0,
+                    sickLeave: 0,
+                    leaveWithoutPay: 0
+                };
+                
+                // Add to existing data
+                existingEmployees.push(adminEmployee);
+                existingUsers.push(adminUserCredentials);
+                
+                const existingLeaveData = JSON.parse(localStorage.getItem('leaveData') || '[]');
+                existingLeaveData.push(leaveData);
+                
+                const existingLeaveAvailable = JSON.parse(localStorage.getItem('leaveAvailable') || '[]');
+                existingLeaveAvailable.push(leaveData);
+                
+                const existingLeaveBooked = JSON.parse(localStorage.getItem('leaveBooked') || '[]');
+                existingLeaveBooked.push(leaveBookedData);
+                
+                // Initialize other required storage items
+                if (!localStorage.getItem('taskData')) {
+                    localStorage.setItem('taskData', '[]');
+                }
+                
+                if (!localStorage.getItem('attendanceData')) {
+                    localStorage.setItem('attendanceData', '[]');
+                }
+                
+                if (!localStorage.getItem('leaveDetails')) {
+                    localStorage.setItem('leaveDetails', '[]');
+                }
+                
+                if (!localStorage.getItem('tags')) {
+                    localStorage.setItem('tags', '[]');
+                }
+                
+                // Save all data to localStorage
+                localStorage.setItem('employeesData', JSON.stringify(existingEmployees));
+                localStorage.setItem('user', JSON.stringify(existingUsers));
+                localStorage.setItem('leaveData', JSON.stringify(existingLeaveData));
+                localStorage.setItem('leaveAvailable', JSON.stringify(existingLeaveAvailable));
+                localStorage.setItem('leaveBooked', JSON.stringify(existingLeaveBooked));
+                
+                showMessage('✅ Admin user created successfully! You can now login with your credentials.', 'success');
+                
+                // Show status after creation
+                setTimeout(() => {
+                    checkStatus();
+                }, 500);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ Error creating admin user: ' + error.message, 'error');
+            }
+        });
+        
+        function checkStatus() {
+            const statusEl = document.getElementById('status');
+            
+            const employeesData = JSON.parse(localStorage.getItem('employeesData') || '[]');
+            const userData = JSON.parse(localStorage.getItem('user') || '[]');
+            const leaveData = JSON.parse(localStorage.getItem('leaveData') || '[]');
+            const taskData = JSON.parse(localStorage.getItem('taskData') || '[]');
+            const attendanceData = JSON.parse(localStorage.getItem('attendanceData') || '[]');
+            
+            const adminUsers = userData.filter(u => u.role === 'admin');
+            
+            let html = '<h3 style="margin-bottom: 15px; color: #333;">📊 Local Storage Status</h3>';
+            
+            html += '<div class="status-item">';
+            html += '<span>Total Employees:</span>';
+            html += `<span class="badge ${employeesData.length > 0 ? 'success' : 'empty'}">${employeesData.length}</span>`;
+            html += '</div>';
+            
+            html += '<div class="status-item">';
+            html += '<span>Admin Users:</span>';
+            html += `<span class="badge ${adminUsers.length > 0 ? 'success' : 'empty'}">${adminUsers.length}</span>`;
+            html += '</div>';
+            
+            html += '<div class="status-item">';
+            html += '<span>User Credentials:</span>';
+            html += `<span class="badge ${userData.length > 0 ? 'success' : 'empty'}">${userData.length}</span>`;
+            html += '</div>';
+            
+            html += '<div class="status-item">';
+            html += '<span>Leave Records:</span>';
+            html += `<span class="badge ${leaveData.length > 0 ? 'success' : 'empty'}">${leaveData.length}</span>`;
+            html += '</div>';
+            
+            html += '<div class="status-item">';
+            html += '<span>Task Data:</span>';
+            html += `<span class="badge ${taskData.length > 0 ? 'success' : 'empty'}">${taskData.length}</span>`;
+            html += '</div>';
+            
+            html += '<div class="status-item">';
+            html += '<span>Attendance Records:</span>';
+            html += `<span class="badge ${attendanceData.length > 0 ? 'success' : 'empty'}">${attendanceData.length}</span>`;
+            html += '</div>';
+            
+            if (adminUsers.length > 0) {
+                html += '<div style="margin-top: 15px; padding: 10px; background: #e7f5ff; border-radius: 6px;">';
+                html += '<strong style="color: #0c5460;">Admin Accounts:</strong><br>';
+                adminUsers.forEach(admin => {
+                    html += `<div style="margin-top: 5px;">📧 ${admin.email}</div>`;
+                });
+                html += '</div>';
+            }
+            
+            statusEl.innerHTML = html;
+            statusEl.style.display = 'block';
+        }
+        
+        function clearAllData() {
+            if (!confirm('⚠️ Are you sure you want to clear ALL local storage data? This action cannot be undone!')) {
+                return;
+            }
+            
+            const keys = [
+                'employeesData',
+                'user',
+                'leaveData',
+                'leaveAvailable',
+                'leaveBooked',
+                'taskData',
+                'attendanceData',
+                'leaveDetails',
+                'tags',
+                'leaveAllocated'
+            ];
+            
+            keys.forEach(key => localStorage.removeItem(key));
+            
+            showMessage('🗑️ All data has been cleared from local storage!', 'info');
+            
+            setTimeout(() => {
+                checkStatus();
+            }, 500);
+        }
+        
+        // Check status on page load
+        window.addEventListener('load', () => {
+            checkStatus();
+        });
+    </script>
+</body>
+</html>

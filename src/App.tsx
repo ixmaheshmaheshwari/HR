@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 // import EmployeeForm from "./components/employee/emplyeeform";
 // import Example from "./components/sidebar/navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 // import PerformanceForm from "./components/performancereview/performanceform";
 // import AttendanceTracking from "./components/attendancetracking/AttendanceTracking";
 // import Navbar from "./components/sidebar/navbar";
@@ -33,7 +33,7 @@ const Login = lazy(() => import("./components/login/Login"));
 const EmployeeProfilePage = lazy(() => import("./pages/EmployeeProfilePage"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
 const EmployeeForm = lazy(() => import("./components/employee/emplyeeform"));
-const Navbar = lazy(() => import("./components/sidebar/navbar"));
+import Navbar from "./components/sidebar/navbar";
 // const AttendanceTracking = lazy(() => import("./components/attendancetracking/AttendanceTracking"));
 const TaskAssignment = lazy(() => import("./components/taskassignment/TaskAssignment"));
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
@@ -47,10 +47,11 @@ const AssignTask = lazy(() => import("./components/taskassignment/TaskAssignment
 const LeaveView = lazy(() => import("./components/leavemanagent/LeaveVeiw"));
 const ApplyLeaveForm = lazy(() => import("./components/leavemanagent/ApplyLeave"));
 const LeaveTable = lazy(() => import("./components/leavemanagent/LeaveAction"));
-const AttendanceCalendar=lazy(()=> import("./components/attendancetracking/AttendanceTracker"))
-const AttendanceReport=lazy(()=> import("./components/attendancetracking/AttendanceGenerator"))
-const PerformanceForm=lazy(()=> import("./components/performancereview/performanceform"))
-const Performancegenerator=lazy(()=>import("./components/performancereview/PErformancegenerator"));
+const AttendanceCalendar = lazy(() => import("./components/attendancetracking/AttendanceTracker"))
+const AttendanceReport = lazy(() => import("./components/attendancetracking/AttendanceGenerator"))
+const PerformanceForm = lazy(() => import("./components/performancereview/performanceform"))
+const Performancegenerator = lazy(() => import("./components/performancereview/PErformancegenerator"));
+
 
 function App() {
   const isAuthenticated = useSelector(
@@ -62,6 +63,9 @@ function App() {
   const userRole = useSelector(
     (state: { auth: LoginState }) => state.auth.role
   );
+
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
   console.log(isAuthenticated);
   console.log(employeeID);
 
@@ -73,102 +77,105 @@ function App() {
         <>
           <ToastContainer />
           <Suspense fallback={<Spinner />}>
-          {isAuthenticated ? (
-            <div className="flex h-screen">
-              <div className="flex-1 flex flex-col overflow-hidden">
-                <Navbar />
-                <SideBar>
-                  <main className="flex-1  overflow-y-auto ">
-                    <Routes>
-                      {userRole === "admin" && (
-                        <>
-                          <Route
-                            path="/employeeform"
-                            element={<EmployeeForm />}
-                          />
-                          <Route
-                            path="/employeeform/:employeeId"
-                            element={<EmployeeForm />}
-                          />
+            {isAuthenticated ? (
+              <div className="flex h-screen">
+                <div className="flex-1 flex flex-col overflow-hidden">
+                  <Navbar
+                    collapsed={sidebarCollapsed}
+                    onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  />
+                  <SideBar collapsed={sidebarCollapsed}>
+                    <main className="flex-1 overflow-y-auto p-4 pb-8">
+                      <Routes>
+                        {userRole === "admin" && (
+                          <>
+                            <Route
+                              path="/employeeform"
+                              element={<EmployeeForm />}
+                            />
+                            <Route
+                              path="/employeeform/:employeeId"
+                              element={<EmployeeForm />}
+                            />
 
-                          <Route path="/assign-task" element={<AssignTask />} />
-                          
-                          <Route
-                        path="/attendence/generator"
-                        element={<AttendanceReport />}
-                      />
-                          <Route
-                            path="/leave/action"
-                            element={<LeaveTable />}
-                          />
-                           <Route
-                            path="/performance"
-                            element={<PerformanceReview />}
-                          />
-                          <Route
-                          path="/performance/form"
-                          element={<PerformanceForm/>}/>
-                           <Route
-                          path="/performance/generator"
-                          element={<Performancegenerator/>}/>
-                        </>
-                      )}
-                      <Route path="/" element={<Dashboard />} />
+                            <Route path="/assign-task" element={<AssignTask />} />
 
-                      <Route
-                        path="/TaskManagement"
-                        element={<TaskAssignment />}
-                      />
-                      <Route
-                        path="/attendence/marker"
-                        element={<AttendanceCalendar />}
-                      />
-<Route
-                            path="/employee/:employeeId"
-                            element={<EmployeeProfile />}
-                          />
-                      <Route
-                        path="/employee"
-                        element={<EmployeeProfilePage />}
-                      />
-                      <Route
-                        path="/employeesearch"
-                        element={<EmployeeSearch />}
-                      />
+                            <Route
+                              path="/attendence/generator"
+                              element={<AttendanceReport />}
+                            />
+                            <Route
+                              path="/leave/action"
+                              element={<LeaveTable />}
+                            />
+                            <Route
+                              path="/performance"
+                              element={<PerformanceReview />}
+                            />
+                            <Route
+                              path="/performance/form"
+                              element={<PerformanceForm />} />
+                            <Route
+                              path="/performance/generator"
+                              element={<Performancegenerator />} />
+                          </>
+                        )}
+                        <Route path="/" element={<Dashboard />} />
 
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/add-task" element={<AddTask />} />
-                      <Route path="/add-task/:taskId" element={<AddTask />} />
-                      <Route path="/track-task" element={<TrackTask />} />
+                        <Route
+                          path="/TaskManagement"
+                          element={<TaskAssignment />}
+                        />
+                        <Route
+                          path="/attendence/marker"
+                          element={<AttendanceCalendar />}
+                        />
+                        <Route
+                          path="/employee/:employeeId"
+                          element={<EmployeeProfile />}
+                        />
+                        <Route
+                          path="/employee"
+                          element={<EmployeeProfilePage />}
+                        />
+                        <Route
+                          path="/employeesearch"
+                          element={<EmployeeSearch />}
+                        />
 
-                      <Route path="/leave" element={<LeaveView />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/add-task" element={<AddTask />} />
+                        <Route path="/add-task/:taskId" element={<AddTask />} />
+                        <Route path="/track-task" element={<TrackTask />} />
 
-                      <Route path="/leave/view" element={<LeaveView />} />
-                      <Route path="/leave/apply" element={<ApplyLeaveForm />} />
-                      
-                      <Route path="/task" element={<TaskAssignment />} />
-                      <Route
-                        path="/performance"
-                        element={<PerformanceReview />}
-                      />
-                      <Route
-                        path="/employeesearch"
-                        element={<EmployeeSearch />}
-                      />
-                      <Route path="/user" element={<UserProfile />} />
+                        <Route path="/leave" element={<LeaveView />} />
 
-                      <Route path="*" element={<Dashboard />} />
-                    </Routes>
-                  </main>
-                </SideBar>
+                        <Route path="/leave/view" element={<LeaveView />} />
+                        <Route path="/leave/apply" element={<ApplyLeaveForm />} />
+
+                        <Route path="/task" element={<TaskAssignment />} />
+                        <Route
+                          path="/performance"
+                          element={<PerformanceReview />}
+                        />
+                        <Route
+                          path="/employeesearch"
+                          element={<EmployeeSearch />}
+                        />
+                        <Route path="/user" element={<UserProfile />} />
+
+                        <Route path="*" element={<Dashboard />} />
+                      </Routes>
+                    </main>
+                  </SideBar>
+                </div>
               </div>
-            </div>
-          ) : (
-            <Login />
-          )}
-           </Suspense>
+            ) : (
+              <Login />
+            )}
+          </Suspense>
         </>
-       
+
       </Router>
       {/* <ToastContainer /> */}
       {/* <Example/> */}

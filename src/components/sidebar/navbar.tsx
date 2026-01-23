@@ -1,172 +1,145 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
+
+import { Layout, Input, Badge, Dropdown, Avatar, Space, Button } from "antd";
+import {
+  BellOutlined,
+  UserOutlined,
+  SearchOutlined,
+  LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined
+} from "@ant-design/icons";
+import type { MenuProps } from 'antd';
 import Innovatech from "./innovlogo.png";
-import { CiUser } from "react-icons/ci";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/actions/loginaction";
-import EmployeeSearch from "../employeesearch/EmployeeSearch";
- 
- 
-interface NavigationItem {
-  name: string;
-  href: string;
-  current: boolean;
+
+const { Header } = Layout;
+const { Search } = Input;
+
+interface NavbarProps {
+  collapsed: boolean;
+  onToggleCollapse: () => void;
 }
- 
-const navigation: NavigationItem[] = [
-  { name: "Dashboard", href: "/AdminDashboard", current: true },
-  { name: "Team", href: "/team", current: false },
-  { name: "Projects", href: "/projects", current: false },
-  { name: "Calendar", href: "/CalendarEvents", current: false },
-];
- 
-function classNames(...classes: (string | boolean)[]): string {
-  return classes.filter(Boolean).join(" ");
-}
- 
-export default function Example() {
- 
+
+export default function Navbar({ collapsed, onToggleCollapse }: NavbarProps) {
   const dispatch = useDispatch();
- 
+  const navigate = useNavigate();
+
   const handleLogout = () => {
-    // Perform any logout-related tasks here
-    // For example, dispatch an action to update the auth state
     dispatch(logOut());
- 
-    // Redirect to the login page
-    // Navigate("/login")
   };
+
+  const handleSearch = (value: string) => {
+    if (value) {
+      navigate(`/employeesearch?q=${value}`);
+    }
+  };
+
+  const userMenuItems: MenuProps['items'] = [
+    {
+      key: 'profile',
+      icon: <UserOutlined />,
+      label: <Link to="/user">Your Profile</Link>,
+    },
+    {
+      key: 'employees',
+      icon: <UserOutlined />,
+      label: <Link to="/employee">Employee Directory</Link>,
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Sign out',
+      onClick: handleLogout,
+      danger: true,
+    },
+  ];
+
   return (
-    <Disclosure as="nav" className="bg-gray-800">
-      {({ open }: { open: boolean }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img
-                  
-                  className="h-6 w-4/12 ml-10 md:w-auto  xl:h-8"
-                  src={Innovatech}
-                    alt="Your Company"
-                  />
-                </div>
-                <div className="w-11/12 sm:ml-6 ml-[-60px] sm:flex justify-center">
-                 <EmployeeSearch/>
-                </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
- 
-                {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
-                  <div>
-                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      <CiUser style={{ color: "White", fontSize: "20px" }} />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }: { active: boolean }) => (
-                          <Link
-                            to="/user"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }: { active: boolean }) => (
-                          <Link
-                            to="/employee"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Employee Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }: { active: boolean }) => (
-                          <Link
-                            to="/login"
-                            onClick={handleLogout}
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-            </div>
-          </div>
- 
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+    <Header
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 24px',
+        background: '#fff',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        borderBottom: '1px solid #f0f0f0',
+      }}
+    >
+      {/* Left Section - Toggle & Logo */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <Button
+          type="text"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={onToggleCollapse}
+          style={{
+            fontSize: '18px',
+            width: 40,
+            height: 40,
+          }}
+        />
+        <Link to="/dashboard">
+          <img
+            src={Innovatech}
+            alt="INNOVATECHS"
+            style={{ height: '32px', cursor: 'pointer' }}
+          />
+        </Link>
+      </div>
+
+      {/* Search Bar */}
+      <div style={{ flex: 1, maxWidth: '500px', margin: '0 24px', display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <Search
+          placeholder="Search employees, tasks, or documents..."
+          allowClear
+          enterButton={<SearchOutlined />}
+          size="middle"
+          onSearch={handleSearch}
+          style={{ width: '100%' }}
+        />
+      </div>
+
+      {/* Right Section - Notifications & User Menu */}
+      <Space size="large">
+        {/* Notifications */}
+        <Badge count={0} showZero={false}>
+          <BellOutlined
+            style={{
+              fontSize: '18px',
+              cursor: 'pointer',
+              color: '#595959',
+            }}
+          />
+        </Badge>
+
+        {/* User Dropdown */}
+        <Dropdown
+          menu={{ items: userMenuItems }}
+          placement="bottomRight"
+          arrow
+        >
+          <Space style={{ cursor: 'pointer' }}>
+            <Avatar
+              size="default"
+              icon={<UserOutlined />}
+              style={{
+                backgroundColor: '#1890ff',
+                cursor: 'pointer',
+              }}
+            />
+          </Space>
+        </Dropdown>
+      </Space>
+    </Header>
   );
 }
- 
