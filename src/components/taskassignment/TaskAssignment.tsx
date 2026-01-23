@@ -2,8 +2,6 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Select } from "antd";
-import { useSelector } from "react-redux";
-import { LoginState } from "../../redux/store/rootreducer";
 import { toast } from "react-toastify";
 import { ArrowLeftOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
@@ -68,7 +66,7 @@ const AssignTask = () => {
     // Return formatted date string in "yyyy-MM-dd" format
     return `${year}-${month}-${day}`;
   };
-  const [resetTask, setResetTask] = useState<Task>({
+  const [resetTask] = useState<Task>({
     taskOwner: "",
     taskName: "",
     description: "",
@@ -80,9 +78,6 @@ const AssignTask = () => {
     priority: "",
     status: "open",
   });
-  const employeeID = useSelector(
-    (state: { auth: LoginState }) => state.auth.userId
-  );
 
   const {
     control,
@@ -104,9 +99,6 @@ const AssignTask = () => {
     },
   });
   const employees = JSON.parse(localStorage.getItem("employeesData") || "[]");
-  const filteredEmployee = employees.find(
-    (employee: any) => employee.employeeId == employeeID
-  );
   console.log(errors);
 
   const existingTask = JSON.parse(localStorage.getItem("taskData") || "[]");

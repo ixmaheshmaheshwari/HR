@@ -80,8 +80,9 @@ const getCurrentDate = (): string => {
 export const hasExistingData = (): boolean => {
     const employeesData = localStorage.getItem('employeesData');
     const userData = localStorage.getItem('user');
-    return (employeesData && JSON.parse(employeesData).length > 0) ||
-        (userData && JSON.parse(userData).length > 0);
+    const hasEmployees = employeesData ? JSON.parse(employeesData).length > 0 : false;
+    const hasUsers = userData ? JSON.parse(userData).length > 0 : false;
+    return hasEmployees || hasUsers;
 };
 
 /**
@@ -117,11 +118,12 @@ export const clearAllStorageData = (): void => {
         'leaveData',
         'leaveAvailable',
         'leaveBooked',
+        'leaveAllocated',
         'taskData',
         'attendanceData',
         'leaveDetails',
         'tags',
-        'leaveAllocated'
+        'formData'
     ];
 
     keys.forEach(key => localStorage.removeItem(key));
@@ -137,7 +139,8 @@ const initializeStorageArrays = (): void => {
         'taskData',
         'attendanceData',
         'leaveDetails',
-        'tags'
+        'tags',
+        'formData'
     ];
 
     storageKeys.forEach(key => {
@@ -275,6 +278,11 @@ export const setupAdminUser = (config: AdminSetupConfig = {}): { success: boolea
         localStorage.setItem('leaveData', JSON.stringify(existingLeaveData));
         localStorage.setItem('leaveAvailable', JSON.stringify(existingLeaveAvailable));
         localStorage.setItem('leaveBooked', JSON.stringify(existingLeaveBooked));
+
+        // Create leaveAllocated data for the admin
+        const existingLeaveAllocated: LeaveData[] = JSON.parse(localStorage.getItem('leaveAllocated') || '[]');
+        existingLeaveAllocated.push(leaveData);
+        localStorage.setItem('leaveAllocated', JSON.stringify(existingLeaveAllocated));
 
         // Initialize other storage arrays
         initializeStorageArrays();

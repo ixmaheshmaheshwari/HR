@@ -11,7 +11,7 @@ const SearchableDropdown: React.FC<{ data: any; onSelect: (value: string) => voi
   const [filteredData, setFilteredData] = useState<any[]>(data); // State to store filtered data
 
   const navigate = useNavigate();
-  
+
 
   const handleChange = (value: string) => {
     setSearch(value);
@@ -30,7 +30,7 @@ const SearchableDropdown: React.FC<{ data: any; onSelect: (value: string) => voi
     setSearch('');
   };
 
-  
+
 
   const handleInput = (value: string): void => {
     setSearch(value);
@@ -40,11 +40,11 @@ const SearchableDropdown: React.FC<{ data: any; onSelect: (value: string) => voi
     setFilteredData(filtered);
   };
   const handleDropdownFocus = () => {
-   console.log("hi")
+    console.log("hi")
   };
 
   const handleDropdownBlur = () => {
-   
+
   };
   return (
     <Select
@@ -53,11 +53,11 @@ const SearchableDropdown: React.FC<{ data: any; onSelect: (value: string) => voi
       // className={`w-4/12 ${
       //   isFocused ? "focus:scale-105" : ""
       // } transition-transform focus:shadow-lg focus:bg-opacity-75`}
-     
-  placeholder="Search employees"
-   optionFilterProp="children"
-   autoClearSearchValue	={true}
-   onFocus={handleDropdownFocus}
+
+      placeholder="Search employees"
+      optionFilterProp="children"
+      autoClearSearchValue={true}
+      onFocus={handleDropdownFocus}
       onBlur={handleDropdownBlur}
       onSearch={handleInput} // Listen to search input changes
       onChange={handleChange}
@@ -86,7 +86,7 @@ const SearchableDropdown: React.FC<{ data: any; onSelect: (value: string) => voi
 };
 
 const EmployeeSearch: React.FC = () => {
-  const [selectedEmployee, setSelectedEmployee] = useState('');
+  const [, setSelectedEmployee] = useState(''); // Prefix with underscore to indicate intentionally unused
   const [employeeData, setEmployeeData] = useState<any>([]);
 
   // Load employee data from localStorage on component mount

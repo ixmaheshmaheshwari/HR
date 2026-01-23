@@ -5,31 +5,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import ReactApexChart from "react-apexcharts";
 
-// import { BarChart, PieChart } from "@mui/x-charts";
-import {
- 
-  useMediaQuery,
-  createTheme,
-} from "@mui/material";
-
 const { Option } = Select;
-const theme = createTheme(); // Create your custom theme
 interface FormData {
- employee:number;
+  employee: number;
   tasks: FormTasks[]
 }
-interface FormTasks{
-    feedback: string;
-    performance: number;
+interface FormTasks {
+  feedback: string;
+  performance: number;
 
-    task: string;
-    qualityOfCode: number;
-    quantityOfCode: number;
-    contributionToCompany: number;
-  
+  task: string;
+  qualityOfCode: number;
+  quantityOfCode: number;
+  contributionToCompany: number;
+
 }
 interface Task {
-  tasks: FormTasks;
+  tasks: FormTasks[];
   taskOwner: string;
   taskName: string;
   description: string;
@@ -85,8 +77,6 @@ interface Employee {
 
 const Performancegenerator: React.FC = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<number | null>(null);
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [selectedTask, setSelectedTask] = useState<string>("");
   const [tasks, setTasks] = useState<Task[] | null>(null);
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
@@ -113,20 +103,7 @@ const Performancegenerator: React.FC = () => {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
-  const chartSetting = {
-    yAxis: [
-      {
-        label: "Performance",
-      },
-    ],
-    width: isSmallScreen ? 300 : 500,
-    height: 400,
-    // sx: {
-    //   [`.${axisClasses.left} .${axisClasses.label}`]: {
-    //     transform: "translate(-20px, 0)",
-    //   },
-    // },
-  };
+
 
   useEffect(() => {
     const storedTaskData = localStorage.getItem("taskData");
@@ -141,7 +118,7 @@ const Performancegenerator: React.FC = () => {
   useEffect(() => {
     const storedFormData = localStorage.getItem("formData");
     const existingFormData = storedFormData ? JSON.parse(storedFormData) : [];
-    const filtereData = existingFormData.filter((data:FormData) => {
+    const filtereData = existingFormData.filter((data: FormData) => {
       // Assuming selectedId and selectedTask are the selected employee ID and task name, respectively
       const selectedId = selectedEmployee; // For example
       const taskTobeFilterer = selectedTask; // For example
@@ -159,615 +136,615 @@ const Performancegenerator: React.FC = () => {
     setSelectedTask(data.task);
   };
 
-//   const renderPieCharts = () => {
-//     if (isGenerated && filteredData.length > 0) {
-//       const qualityPieSeries = filteredData.map((data:FormData) => {
-//         console.log(data, "hd"); // Log each data object individually
-//         return {
-//           data: [
-//             { label: `Total Points`, value: 10 },
-//             // Map over taskName array and access qualityOfCode for each task
-//             ...data.tasks.map((task:FormTasks) => ({
-//               label: `Quality of Code`,
-//               value: task.qualityOfCode,
-//             })),
-//           ],
-//           highlightScope: {
-//             faded: "global",
-//             highlighted: "item",
-//           },
-//           faded: {
-//             innerRadius: 30,
-//             additionalRadius: -30,
-//             color: "gray",
-//           },
-//           innerRadius: 30,
-//           outerRadius: 70,
-//           paddingAngle: 5,
-//           cornerRadius: 5,
-//           startAngle: -90,
-//           endAngle: 180,
-//         };
-//       });
+  //   const renderPieCharts = () => {
+  //     if (isGenerated && filteredData.length > 0) {
+  //       const qualityPieSeries = filteredData.map((data:FormData) => {
+  //         console.log(data, "hd"); // Log each data object individually
+  //         return {
+  //           data: [
+  //             { label: `Total Points`, value: 10 },
+  //             // Map over taskName array and access qualityOfCode for each task
+  //             ...data.tasks.map((task:FormTasks) => ({
+  //               label: `Quality of Code`,
+  //               value: task.qualityOfCode,
+  //             })),
+  //           ],
+  //           highlightScope: {
+  //             faded: "global",
+  //             highlighted: "item",
+  //           },
+  //           faded: {
+  //             innerRadius: 30,
+  //             additionalRadius: -30,
+  //             color: "gray",
+  //           },
+  //           innerRadius: 30,
+  //           outerRadius: 70,
+  //           paddingAngle: 5,
+  //           cornerRadius: 5,
+  //           startAngle: -90,
+  //           endAngle: 180,
+  //         };
+  //       });
 
-     
 
-//       const quantityOfCode = filteredData.map((data) => {
-//         console.log(data, "hd"); // Log each data object individually
-//         return {
-//           data: [
-//             { label: `Total Points`, value: 10 },
-//             // Map over taskName array and access qualityOfCode for each task
-//             ...data.tasks.map((task:FormTasks) => ({
-//               label: `Quantity of COde`,
-//               value: task.quantityOfCode,
-//             })),
-//           ],
-//           highlightScope: {
-//             faded: "global",
-//             highlighted: "item",
-//           },
-//           faded: {
-//             innerRadius: 30,
-//             additionalRadius: -30,
-//             color: "gray",
-//           },
-//           innerRadius: 30,
-//           outerRadius: 70,
-//           paddingAngle: 5,
-//           cornerRadius: 5,
-//           startAngle: -90,
-//           endAngle: 180,
-//         };
-//       });
 
-//       const contributionToCompany = filteredData.map((data) => {
-//         console.log(data, "hd"); // Log each data object individually
-//         return {
-//           data: [
-//             { label: `Total Points`, value: 10 },
-//             // Map over taskName array and access qualityOfCode for each task
-//             ...data.tasks.map((task:FormTasks) => ({
-//               label: `Contribution to Company`,
-//               value: task.contributionToCompany,
-//             })),
-//           ],
-//           highlightScope: {
-//             faded: "global",
-//             highlighted: "item",
-//           },
-//           faded: {
-//             innerRadius: 30,
-//             additionalRadius: -30,
-//             color: "gray",
-//           },
-//           innerRadius: 30,
-//           outerRadius: 70,
-//           paddingAngle: 5,
-//           cornerRadius: 5,
-//           startAngle: -90,
-//           endAngle: 180,
-//         };
-//       });
+  //       const quantityOfCode = filteredData.map((data) => {
+  //         console.log(data, "hd"); // Log each data object individually
+  //         return {
+  //           data: [
+  //             { label: `Total Points`, value: 10 },
+  //             // Map over taskName array and access qualityOfCode for each task
+  //             ...data.tasks.map((task:FormTasks) => ({
+  //               label: `Quantity of COde`,
+  //               value: task.quantityOfCode,
+  //             })),
+  //           ],
+  //           highlightScope: {
+  //             faded: "global",
+  //             highlighted: "item",
+  //           },
+  //           faded: {
+  //             innerRadius: 30,
+  //             additionalRadius: -30,
+  //             color: "gray",
+  //           },
+  //           innerRadius: 30,
+  //           outerRadius: 70,
+  //           paddingAngle: 5,
+  //           cornerRadius: 5,
+  //           startAngle: -90,
+  //           endAngle: 180,
+  //         };
+  //       });
 
-//       const performanceInTheTask = filteredData.map((data) => {
-//         console.log(data, "hd"); // Log each data object individually
-//         return {
-//           data: [
-//             { label: `Total Points`, value: 30 },
-//             // Map over taskName array and access qualityOfCode for each task
-//             ...data.tasks.map((task:FormTasks) => ({
-//               label: `Performance of Employee`,
-//               value: task.performance,
-//             })),
-//           ],
-//           highlightScope: {
-//             faded: "global",
-//             highlighted: "item",
-//           },
-//           faded: {
-//             innerRadius: 30,
-//             additionalRadius: -30,
-//             color: "gray",
-//           },
-//           innerRadius: 30,
-//           outerRadius: 70,
-//           paddingAngle: 5,
-//           cornerRadius: 5,
-//           startAngle: -90,
-//           endAngle: 180,
-//           label: {
-//             position: 'left', // Set the position of the labels to the left
-//             offset: 30, // Adjust the offset to shift the labels further left
-//           },
-//         };
-//       });
-//       return (
-//         <>
-//           <div className=" sm:grid-cols-1  grid grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2  gap-4">
-//             <div className="bg-white p-4 shadow-md rounded-lg">
-//               <h3 className="text-lg font-semibold mb-2">
-//                 Quality of code in the task
-//               </h3>
-//               <div className=" h-56 md:h-80 lg:h-96">
-//                 <PieChart
-//                   style={{
-//                     width: 200,
-//                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
-//                   }}
-//                   series={qualityPieSeries}
-//                 />
-//               </div>
-//             </div>
-//             <div className="bg-white p-4 shadow-md rounded-lg">
-//               <h3 className="text-lg font-semibold mb-2">
-//                 Quantity of Code of code in the task
-//               </h3>
-//               <div className=" h-56 md:h-80 lg:h-96">
-//                 <PieChart
-//                   style={{
-//                     width: 200,
-//                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
-//                   }}
-//                   series={quantityOfCode}
-//                 />
-//               </div>
-//             </div>
-//             <div className="bg-white p-4 shadow-md rounded-lg">
-//               <h3 className="text-lg font-semibold mb-2">
-//                 Contribution to Company in the task
-//               </h3>
-//               <div className=" h-56 md:h-80 lg:h-96">
-//                 <PieChart
-//                   style={{
-//                     width: 200,
-//                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
-//                   }}
-//                   series={contributionToCompany}
-//                 />
-//               </div>
-//             </div>
-//             <div className="bg-white p-4   shadow-md rounded-lg">
-//               <h3 className="text-lg font-semibold mb-2">
-//                 Performance and Feedback
-//               </h3>
-//               <div className=" h-56 md:h-80 lg:h-96">
-//                 <PieChart
-//                   style={{
-//                     width: 200,
-//                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
-//                   }}
-//                   series={performanceInTheTask}
-//                 />
-               
-//               </div>
-//               {filteredData.map((data, index) => (
-//                   <div key={index}>
-//                     {data.tasks.map((task:FormTasks, taskIndex:number) => (
-//  <h4 key={taskIndex} className="mt-4 text-lg text-center font-medium text-gray-800">
-//  Feedback for the employee: {task.feedback}
-// </h4>
-//                     ))}
-//                   </div>
-//                 ))}
-//             </div>
-//           </div>
-//         </>
-//       );
-      
-//     }
-//   };
+  //       const contributionToCompany = filteredData.map((data) => {
+  //         console.log(data, "hd"); // Log each data object individually
+  //         return {
+  //           data: [
+  //             { label: `Total Points`, value: 10 },
+  //             // Map over taskName array and access qualityOfCode for each task
+  //             ...data.tasks.map((task:FormTasks) => ({
+  //               label: `Contribution to Company`,
+  //               value: task.contributionToCompany,
+  //             })),
+  //           ],
+  //           highlightScope: {
+  //             faded: "global",
+  //             highlighted: "item",
+  //           },
+  //           faded: {
+  //             innerRadius: 30,
+  //             additionalRadius: -30,
+  //             color: "gray",
+  //           },
+  //           innerRadius: 30,
+  //           outerRadius: 70,
+  //           paddingAngle: 5,
+  //           cornerRadius: 5,
+  //           startAngle: -90,
+  //           endAngle: 180,
+  //         };
+  //       });
 
-const renderPieCharts = () => {
-  if (isGenerated && filteredData.length > 0) {
-    return filteredData.map((data, index) => (
-      <div key={index} className="bg-white p-4 shadow-md rounded-lg mb-4">
-        <h3 className="text-lg font-semibold mb-2">Performance Metrics for Task {selectedTask}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
-          <div className="col-span-1 h-fit">
-            <h4 className="text-lg font-semibold mb-2">Quality of Code</h4>
-            <ReactApexChart
-              options={{
-                chart: {
-                  type: "pie",
-                },
-                labels: ["Total Points", "Quality of Code"],
-                responsive: [
-                  {
-                    breakpoint: 480,
-                    options: {
-                      chart: {
-                        width: 200
-                      },
-                      legend: {
-                        position: 'bottom'
+  //       const performanceInTheTask = filteredData.map((data) => {
+  //         console.log(data, "hd"); // Log each data object individually
+  //         return {
+  //           data: [
+  //             { label: `Total Points`, value: 30 },
+  //             // Map over taskName array and access qualityOfCode for each task
+  //             ...data.tasks.map((task:FormTasks) => ({
+  //               label: `Performance of Employee`,
+  //               value: task.performance,
+  //             })),
+  //           ],
+  //           highlightScope: {
+  //             faded: "global",
+  //             highlighted: "item",
+  //           },
+  //           faded: {
+  //             innerRadius: 30,
+  //             additionalRadius: -30,
+  //             color: "gray",
+  //           },
+  //           innerRadius: 30,
+  //           outerRadius: 70,
+  //           paddingAngle: 5,
+  //           cornerRadius: 5,
+  //           startAngle: -90,
+  //           endAngle: 180,
+  //           label: {
+  //             position: 'left', // Set the position of the labels to the left
+  //             offset: 30, // Adjust the offset to shift the labels further left
+  //           },
+  //         };
+  //       });
+  //       return (
+  //         <>
+  //           <div className=" sm:grid-cols-1  grid grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2  gap-4">
+  //             <div className="bg-white p-4 shadow-md rounded-lg">
+  //               <h3 className="text-lg font-semibold mb-2">
+  //                 Quality of code in the task
+  //               </h3>
+  //               <div className=" h-56 md:h-80 lg:h-96">
+  //                 <PieChart
+  //                   style={{
+  //                     width: 200,
+  //                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+  //                   }}
+  //                   series={qualityPieSeries}
+  //                 />
+  //               </div>
+  //             </div>
+  //             <div className="bg-white p-4 shadow-md rounded-lg">
+  //               <h3 className="text-lg font-semibold mb-2">
+  //                 Quantity of Code of code in the task
+  //               </h3>
+  //               <div className=" h-56 md:h-80 lg:h-96">
+  //                 <PieChart
+  //                   style={{
+  //                     width: 200,
+  //                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+  //                   }}
+  //                   series={quantityOfCode}
+  //                 />
+  //               </div>
+  //             </div>
+  //             <div className="bg-white p-4 shadow-md rounded-lg">
+  //               <h3 className="text-lg font-semibold mb-2">
+  //                 Contribution to Company in the task
+  //               </h3>
+  //               <div className=" h-56 md:h-80 lg:h-96">
+  //                 <PieChart
+  //                   style={{
+  //                     width: 200,
+  //                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+  //                   }}
+  //                   series={contributionToCompany}
+  //                 />
+  //               </div>
+  //             </div>
+  //             <div className="bg-white p-4   shadow-md rounded-lg">
+  //               <h3 className="text-lg font-semibold mb-2">
+  //                 Performance and Feedback
+  //               </h3>
+  //               <div className=" h-56 md:h-80 lg:h-96">
+  //                 <PieChart
+  //                   style={{
+  //                     width: 200,
+  //                     height: isSmallScreen ? 200 : 400, // Adjust height based on screen size
+  //                   }}
+  //                   series={performanceInTheTask}
+  //                 />
+
+  //               </div>
+  //               {filteredData.map((data, index) => (
+  //                   <div key={index}>
+  //                     {data.tasks.map((task:FormTasks, taskIndex:number) => (
+  //  <h4 key={taskIndex} className="mt-4 text-lg text-center font-medium text-gray-800">
+  //  Feedback for the employee: {task.feedback}
+  // </h4>
+  //                     ))}
+  //                   </div>
+  //                 ))}
+  //             </div>
+  //           </div>
+  //         </>
+  //       );
+
+  //     }
+  //   };
+
+  const renderPieCharts = () => {
+    if (isGenerated && filteredData.length > 0) {
+      return filteredData.map((data, index) => (
+        <div key={index} className="bg-white p-4 shadow-md rounded-lg mb-4">
+          <h3 className="text-lg font-semibold mb-2">Performance Metrics for Task {selectedTask}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+            <div className="col-span-1 h-fit">
+              <h4 className="text-lg font-semibold mb-2">Quality of Code</h4>
+              <ReactApexChart
+                options={{
+                  chart: {
+                    type: "pie",
+                  },
+                  labels: ["Total Points", "Quality of Code"],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'bottom'
+                        }
                       }
-                    }
-                  },
-                  {
-                    breakpoint: 376,
-                    options: {
-                      chart: {
-                        width: 160
-                      },
-                      legend: {
-                        position: 'bottom'
-                      },
-                      dataLabels: {
-                        enabled: true,
-                       
-                        textAnchor: 'start',
-                      },
-                    }
-                  },
-                  {
-                    breakpoint: 285,
-                    options: {
-                      chart: {
-                        width: 104
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '10px',
-                        width:100
-                      },
-                      dataLabels: {
-                        enabled: false,
-                      },
-                      
-                    }
-                  },
-                  {
-                    breakpoint: 900,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                  {
-                    breakpoint: 1030,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                 
-                ]
-              }}
-              series={[10, ...data.tasks.map((task:FormTasks) => task.qualityOfCode)]}
-              type="pie"
-              height="261px"    
-              minHeight="110px"        />
-          </div>
-          <div className="col-span-1 h-fit">
-            <h4 className="text-lg font-semibold mb-2">Quantity of Code</h4>
-            <ReactApexChart
-              options={{
-                chart: {
-                  type: "pie",
-                },
-                labels: ["Total Points", "Quantity of Code"],
-                responsive: [
-                  {
-                    breakpoint: 480,
-                    options: {
-                      chart: {
-                        width: 200
-                      },
-                      legend: {
-                        position: 'bottom'
+                    },
+                    {
+                      breakpoint: 376,
+                      options: {
+                        chart: {
+                          width: 160
+                        },
+                        legend: {
+                          position: 'bottom'
+                        },
+                        dataLabels: {
+                          enabled: true,
+
+                          textAnchor: 'start',
+                        },
                       }
-                    }
-                  },
-                  {
-                    breakpoint: 376,
-                    options: {
-                      chart: {
-                        width: 160
-                      },
-                      legend: {
-                        position: 'bottom'
-                      },
-                      dataLabels: {
-                        enabled: true,
-                       
-                        textAnchor: 'start',
-                      },
-                    }
-                  },
-                  {
-                    breakpoint: 285,
-                    options: {
-                      chart: {
-                        width: 104
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '10px',
-                        width:100
-                      },
-                      dataLabels: {
-                        enabled: false,
-                      },
-                      
-                    }
-                  },
-                  {
-                    breakpoint: 900,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                  {
-                    breakpoint: 1030,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                 
-                ]
-              }}
-              series={[10, ...data.tasks.map((task:FormTasks) => task.quantityOfCode)]}
-              type="pie"
-              height="261px" 
-              minHeight="110px "           />
-          </div>
-          <div className="col-span-1">
-            <h4 className="text-lg font-semibold mb-2">Contribution to Company</h4>
-            <ReactApexChart
-              options={{
-                chart: {
-                  type: "pie",
-                },
-               
-                labels: ["Total Points", "Contribution"],
-                responsive: [
-                  {
-                    breakpoint: 480,
-                    options: {
-                      chart: {
-                        width: 200
-                      },
-                      legend: {
-                        position: 'bottom'
+                    },
+                    {
+                      breakpoint: 285,
+                      options: {
+                        chart: {
+                          width: 104
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '10px',
+                          width: 100
+                        },
+                        dataLabels: {
+                          enabled: false,
+                        },
+
                       }
-                    }
-                  },
-                  {
-                    breakpoint: 376,
-                    options: {
-                      chart: {
-                        width: 160
-                      },
-                      legend: {
-                        position: 'bottom'
-                      },
-                      dataLabels: {
-                        enabled: true,
-                       
-                        textAnchor: 'start',
-                      },
-                    }
-                  },
-                  {
-                    breakpoint: 285,
-                    options: {
-                      chart: {
-                        width: 104
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '10px',
-                        width:100
-                      },
-                      dataLabels: {
-                        enabled: false,
-                      },
-                      
-                    }
-                  },
-                  {
-                    breakpoint: 900,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                  {
-                    breakpoint: 1030,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                 
-                ]
-              }}
-              series={[10, ...data.tasks.map((task:FormTasks) => task.contributionToCompany)]}
-              type="pie"
-              height="261px"   
-              minHeight="110px"         />
-          </div>
-          
-          
-          <div className="col-span-1">
-            <h4 className="text-lg font-semibold mb-2">Performance</h4>
-            <ReactApexChart
-              options={{
-                dataLabels: {
-                  enabled: true,
-                  textAnchor: 'middle',
-                  offsetX: 10,
-  offsetY: 10,
-                  },
-            
-                chart: {
-                  type: "pie",
-                  
-                },
-                labels: ["Total Points", "Performance"],
-                responsive: [
-                  {
-                    breakpoint: 480,
-                    options: {
-                      chart: {
-                        width: 200
-                      },
-                      legend: {
-                        position: 'bottom'
+                    },
+                    {
+                      breakpoint: 900,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
                       }
-                    }
+                    },
+                    {
+                      breakpoint: 1030,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+
+                  ]
+                }}
+                series={[10, ...data.tasks.map((task: FormTasks) => task.qualityOfCode)]}
+                type="pie"
+                height="261px"
+                minHeight="110px" />
+            </div>
+            <div className="col-span-1 h-fit">
+              <h4 className="text-lg font-semibold mb-2">Quantity of Code</h4>
+              <ReactApexChart
+                options={{
+                  chart: {
+                    type: "pie",
                   },
-                  {
-                    breakpoint: 376,
-                    options: {
-                      chart: {
-                        width: 160
-                      },
-                      legend: {
-                        position: 'bottom'
-                      },
-                      dataLabels: {
-                        enabled: true,
-                       
-                        textAnchor: 'start',
-                      },
-                    }
+                  labels: ["Total Points", "Quantity of Code"],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'bottom'
+                        }
+                      }
+                    },
+                    {
+                      breakpoint: 376,
+                      options: {
+                        chart: {
+                          width: 160
+                        },
+                        legend: {
+                          position: 'bottom'
+                        },
+                        dataLabels: {
+                          enabled: true,
+
+                          textAnchor: 'start',
+                        },
+                      }
+                    },
+                    {
+                      breakpoint: 285,
+                      options: {
+                        chart: {
+                          width: 104
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '10px',
+                          width: 100
+                        },
+                        dataLabels: {
+                          enabled: false,
+                        },
+
+                      }
+                    },
+                    {
+                      breakpoint: 900,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+                    {
+                      breakpoint: 1030,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+
+                  ]
+                }}
+                series={[10, ...data.tasks.map((task: FormTasks) => task.quantityOfCode)]}
+                type="pie"
+                height="261px"
+                minHeight="110px " />
+            </div>
+            <div className="col-span-1">
+              <h4 className="text-lg font-semibold mb-2">Contribution to Company</h4>
+              <ReactApexChart
+                options={{
+                  chart: {
+                    type: "pie",
                   },
-                  {
-                    breakpoint: 285,
-                    options: {
-                      chart: {
-                        width: 104
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '10px',
-                        width:100
-                      },
-                      dataLabels: {
-                        enabled: false,
-                      },
-                      
-                    }
+
+                  labels: ["Total Points", "Contribution"],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'bottom'
+                        }
+                      }
+                    },
+                    {
+                      breakpoint: 376,
+                      options: {
+                        chart: {
+                          width: 160
+                        },
+                        legend: {
+                          position: 'bottom'
+                        },
+                        dataLabels: {
+                          enabled: true,
+
+                          textAnchor: 'start',
+                        },
+                      }
+                    },
+                    {
+                      breakpoint: 285,
+                      options: {
+                        chart: {
+                          width: 104
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '10px',
+                          width: 100
+                        },
+                        dataLabels: {
+                          enabled: false,
+                        },
+
+                      }
+                    },
+                    {
+                      breakpoint: 900,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+                    {
+                      breakpoint: 1030,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+
+                  ]
+                }}
+                series={[10, ...data.tasks.map((task: FormTasks) => task.contributionToCompany)]}
+                type="pie"
+                height="261px"
+                minHeight="110px" />
+            </div>
+
+
+            <div className="col-span-1">
+              <h4 className="text-lg font-semibold mb-2">Performance</h4>
+              <ReactApexChart
+                options={{
+                  dataLabels: {
+                    enabled: true,
+                    textAnchor: 'middle',
+                    offsetX: 10,
+                    offsetY: 10,
                   },
-                  {
-                    breakpoint: 900,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
+
+                  chart: {
+                    type: "pie",
+
                   },
-                  {
-                    breakpoint: 1030,
-                    options: {
-                      chart: {
-                        width: 230
-                      },
-                      legend: {
-                        position: 'bottom',
-                        fontSize: '15px',
-                        width:150
-                      },
-                      dataLabels: {
-                        enabled: true,
-                      },
-                      
-                    }
-                  },
-                 
-                ]
-               
-              }}
-              series={[30, ...data.tasks.map((task:FormTasks) => task.performance)]}
-              type="pie"
-              height="261px"   
-              minHeight="110px"         />
+                  labels: ["Total Points", "Performance"],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'bottom'
+                        }
+                      }
+                    },
+                    {
+                      breakpoint: 376,
+                      options: {
+                        chart: {
+                          width: 160
+                        },
+                        legend: {
+                          position: 'bottom'
+                        },
+                        dataLabels: {
+                          enabled: true,
+
+                          textAnchor: 'start',
+                        },
+                      }
+                    },
+                    {
+                      breakpoint: 285,
+                      options: {
+                        chart: {
+                          width: 104
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '10px',
+                          width: 100
+                        },
+                        dataLabels: {
+                          enabled: false,
+                        },
+
+                      }
+                    },
+                    {
+                      breakpoint: 900,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+                    {
+                      breakpoint: 1030,
+                      options: {
+                        chart: {
+                          width: 230
+                        },
+                        legend: {
+                          position: 'bottom',
+                          fontSize: '15px',
+                          width: 150
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+
+                      }
+                    },
+
+                  ]
+
+                }}
+                series={[30, ...data.tasks.map((task: FormTasks) => task.performance)]}
+                type="pie"
+                height="261px"
+                minHeight="110px" />
+            </div>
           </div>
+          {data.tasks.map((task: FormTasks, taskIndex: number) => (
+            <h4 key={taskIndex} className="mt-4 text-lg text-center font-medium text-gray-800">
+              Feedback for the employee: {task.feedback}
+            </h4>
+          ))}
         </div>
-        {data.tasks.map((task:FormTasks, taskIndex:number) => (
-          <h4 key={taskIndex} className="mt-4 text-lg text-center font-medium text-gray-800">
-            Feedback for the employee: {task.feedback}
-          </h4>
-        ))}
-      </div>
-    ));
-  }
-};
+      ));
+    }
+  };
 
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="w-11/12 xs:w-auto mx-auto mt-10 bg-white rounded-lg shadow-md p-6 m-10 ml-5">
@@ -868,7 +845,7 @@ const renderPieCharts = () => {
         </form>
         {isGenerated && (
           <div>
-           
+
             {renderPieCharts()}
           </div>
         )}

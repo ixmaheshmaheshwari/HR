@@ -3,8 +3,6 @@ import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Select } from "antd";
-import { useSelector } from "react-redux";
-import { LoginState } from "../../redux/store/rootreducer";
 
 interface FormData {
   employee: number;
@@ -95,7 +93,7 @@ const PerformanceForm = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<number>(0);
   const [taskData, setTaskData] = useState<Task[]>([]);
   const [employeesData, setEmployeesData] = useState<Employee[]>([]);
-  const role = useSelector((state: { auth: LoginState }) => state.auth.role);
+  // role is used for conditional rendering in future
   const { Option } = Select;
 
   const {
@@ -177,12 +175,12 @@ const PerformanceForm = () => {
       ? JSON.parse(storedEmployeeData)
       : [];
 
-   
-      const employeesData = employeeData.filter(
-        (employee: Employee) => employee.employeeRole !== "admin"
-      )
-      setEmployeesData(employeesData);
-    
+
+    const employeesData = employeeData.filter(
+      (employee: Employee) => employee.employeeRole !== "admin"
+    )
+    setEmployeesData(employeesData);
+
   }, []);
 
   const { fields, append, remove } = useFieldArray({
@@ -317,13 +315,12 @@ const PerformanceForm = () => {
                             <input
                               {...field}
                               type="number"
-                              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                                errors?.tasks &&
+                              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors?.tasks &&
                                 errors?.tasks[index] &&
                                 errors?.tasks[index]?.qualityOfCode
-                                  ? "border-red-500"
-                                  : ""
-                              }`}
+                                ? "border-red-500"
+                                : ""
+                                }`}
                             />
                           )}
                         />
@@ -355,13 +352,12 @@ const PerformanceForm = () => {
                             <input
                               {...field}
                               type="number"
-                              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                                errors?.tasks &&
+                              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors?.tasks &&
                                 errors?.tasks[index] &&
                                 errors?.tasks[index]?.quantityOfCode
-                                  ? "border-red-500"
-                                  : ""
-                              }`}
+                                ? "border-red-500"
+                                : ""
+                                }`}
                             />
                           )}
                         />
@@ -393,13 +389,12 @@ const PerformanceForm = () => {
                             <input
                               {...field}
                               type="number"
-                              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                                errors?.tasks &&
+                              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors?.tasks &&
                                 errors?.tasks[index] &&
                                 errors?.tasks[index]?.contributionToCompany
-                                  ? "border-red-500"
-                                  : ""
-                              }`}
+                                ? "border-red-500"
+                                : ""
+                                }`}
                             />
                           )}
                         />

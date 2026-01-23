@@ -18,4 +18,5 @@ const rootReducer = combineReducers({
 // Define RootState based on the combined reducers
 export type RootState = ReturnType<typeof rootReducer>;
 
-export default persistReducer(persistConfig, rootReducer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default persistReducer(persistConfig as any, rootReducer as any);
